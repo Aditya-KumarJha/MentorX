@@ -1,26 +1,17 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Description from './components/Description';
-import EduMatrix from './components/Edumatrix';
-import WebDeveloperPage from './components/WebDeveloperPage';  
+import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import HomePage from './pages/HomePage';
 
-function App() {
+const App = () => {
   return (
-    <div className='w-full min-h-screen bg-zinc-900 text-white'>
+    <div className="min-h-screen">
+      <Toaster position="bottom-right" reverseOrder={false} />     
       <Routes>
-        <Route path="/" element={
-            <>
-              <Navbar />
-              <Description />
-            </>
-          } 
-        />
-        <Route path="/edumatrix" element={<EduMatrix />} />
-        <Route path="/web-developer" element={<WebDeveloperPage />} /> 
+        <Route path="/" element={<HomePage />} />
       </Routes>
     </div>
   );
-}
+};
 
 export default App;
