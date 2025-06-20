@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sun, Moon, Menu } from "lucide-react";
 import { ThemeContext } from "../context/ThemeContext";
+import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaPhoneAlt } from 'react-icons/fa';
 
 const Navbar = ({ contactRef, onContactClick }) => {
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
@@ -34,40 +35,47 @@ const Navbar = ({ contactRef, onContactClick }) => {
           </h1>
         </div>
 
-        <nav className="hidden lg:flex gap-6 text-lg font-semibold">
-          {navLinks.map(({ label, href }, i) => (
-            <div
-              key={i}
-              className={`group relative px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer transform hover:scale-105 ${
-                darkMode
-                  ? "hover:bg-zinc-800 hover:border hover:border-blue-400"
-                  : "hover:bg-blue-100 hover:border hover:border-blue-400"
+        <nav className="hidden lg:flex gap-4 text-lg font-semibold">
+          {[
+            { label: 'Mentor AI', href: '/mentor-ai', icon: <FaBrain className="inline-block mr-2" /> },
+            { label: 'PathFinder AI', href: '/pathfinder-ai', icon: <FaCompass className="inline-block mr-2" /> },
+            { label: 'EduMatrix', href: '/edumatrix', icon: <FaUserGraduate className="inline-block mr-2" /> },
+            { label: 'Community', href: '/community', icon: <FaUsers className="inline-block mr-2" /> }
+          ].map(({ label, href, icon }, i) => (
+          <div
+            key={i}
+            className={`group relative px-4 py-2 rounded-xl cursor-pointer transform hover:scale-105 ${
+            darkMode
+            ? 'hover:bg-zinc-800 hover:border hover:border-blue-400'
+            : 'hover:bg-blue-100 hover:border hover:border-blue-400'
+            }`}
+          >
+            <a
+              href={href}
+              className={`flex items-center ${
+              darkMode ? 'group-hover:text-blue-400' : 'group-hover:text-blue-600'
               }`}
             >
-              <a
-                href={href}
-                className={`transition-all duration-300 ${
-                  darkMode ? "group-hover:text-blue-400" : "group-hover:text-blue-600"
-                }`}
-              >
-                {label}
-              </a>
-            </div>
+              {icon}
+              {label}
+            </a>
+          </div>
           ))}
 
           <div
             onClick={handleContactClick}
             className={`group relative px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer transform hover:scale-105 ${
-              darkMode
-                ? "hover:bg-zinc-800 hover:border hover:border-blue-400"
-                : "hover:bg-blue-100 hover:border hover:border-blue-400"
+            darkMode
+            ? 'hover:bg-zinc-800 hover:border hover:border-blue-400'
+            : 'hover:bg-blue-100 hover:border hover:border-blue-400'
             }`}
           >
             <span
-              className={`transition-all duration-300 ${
-                darkMode ? "group-hover:text-blue-400" : "group-hover:text-blue-600"
+              className={`transition-all duration-300 flex items-center ${
+                darkMode ? 'group-hover:text-blue-400' : 'group-hover:text-blue-600'
               }`}
             >
+              <FaPhoneAlt className="inline-block mr-2" />
               Contact Us
             </span>
           </div>

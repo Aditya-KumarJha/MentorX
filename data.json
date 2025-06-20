@@ -1,0 +1,833 @@
+{
+    "public_identifier": "evanleong",
+    "profile_pic_url": "https://s3.us-west-000.backblazeb2.com/proxycurl/person/evanleong/profile?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0004d7f56a0400b0000000001%2F20250620%2Fus-west-000%2Fs3%2Faws4_request&X-Amz-Date=20250620T142401Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4e6e3f5f12f0d440b66f20c34ea49cf56099d9bf2340dcfc94699f2f3171a2ec",
+    "background_cover_image_url": null,
+    "first_name": "Evan",
+    "last_name": "Leong",
+    "full_name": "Evan Leong",
+    "follower_count": null,
+    "occupation": "Chief Executive Officer at Brain Gain Hawaii",
+    "headline": "Executive Recruiter & Coach - I help people level up inside & out",
+    "summary": "I am a serial entrepreneur with a social mission focused on making a difference in Hawaii. My current endeavour is helping people navigate through challenging life situations (i.e. career, relationships, unresolved trauma, health, etc) and gain clarity and growth. My specialty is helping leaders get \"unstuck\". I do this through business consulting, coaching and helping senior leaders find jobs in Hawaii with a special focus on Hawaii raised ex-pats looking to find a job and move home as well as Hawaii residents that want to level up their lives. \n\nI have a holistic coaching practice that combines over 30 years of cutting-edge business best practices with spiritual and therapeutic models to help \"A-level\" players that are underperforming get their mojo back. I am especially good at helping people heal from guilt, shame and grief and have a large network of solution providers as well. I also own successful ventures in food, technology and action sports. \n\nMy specialty is guiding business owners and executives in challenging situations that require someone with the experience and knowledge of the demands as a business leader with the ability to help resolve mental, spiritual and emotional issues that can't be broached with coworkers, board of directors and partners. I am the person that leaders come to when they don't know where else to go. \n\nI am constantly building and connecting people in my network when I see a win-win relationship and shared interests. I enjoy facilitating connections when it makes sense. I believe that a team effort has a big advantage over an individual effort and is more fun. \n\nMy community focus since 2005 has been to help develop more capacity for community leadership. This is done by bringing in and developing new talent. There is a shortage in Hawaii of community leaders so we have to do whatever we can to make a difference.",
+    "country": "US",
+    "country_full_name": "United States of America",
+    "city": "Honolulu County",
+    "state": "Hawaii",
+    "experiences": [
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 4,
+                "year": 2019
+            },
+            "ends_at": null,
+            "company": "Brain Gain Hawaii",
+            "company_linkedin_profile_url": "https://www.linkedin.com/company/braingainhawaii/",
+            "company_facebook_profile_url": null,
+            "title": "Chief Executive Officer",
+            "description": "Brain Gain Hawaii (BGH) is a boutique recruitment and consulting firm specializing in senior management and executive search and placement. In order to reduce the \"Brain Drain\", BGH also focuses on helping Hawaii expats that are trying to return home and want to navigate the local opportunities with an inside perspective and connection. We are primarily referral based and have decades of relationships in all industries and locations. We also specialize in candidate/management/executive career coaching, non profit board and volunteer matching and community leadership development. \n\nOn the consulting side we have decades of experience in outsourcing, offshoring and BPO and can guide and help companies implement these programs.",
+            "location": "Honolulu, Hawaii, United States",
+            "logo_url": "https://s3.us-west-000.backblazeb2.com/proxycurl/company/braingainhawaii/profile?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0004d7f56a0400b0000000001%2F20250620%2Fus-west-000%2Fs3%2Faws4_request&X-Amz-Date=20250620T142401Z&X-Amz-Expires=1800&X-Amz-SignedHeaders=host&X-Amz-Signature=41be51405916430faf6568a32c18b0b9370d36e7726aaa6b6a0437bbc0b581e6"
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 5,
+                "year": 2015
+            },
+            "ends_at": null,
+            "company": "Menehunes",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "Co Founder",
+            "description": "In 2015 our family launched our venture which we called the Menehunes. What started off as a YouTube channel https://www.youtube.com/c/menehunes and blog www.menehunes.net evolved into becoming the youngest team to ever win a Startup Weekend https://startupweekend.org/ and placing 2nd in the Global Startup Battle http://www.techstars.com/content/uncategorized/announcing-the-2015-global-startup-battle-champions/. For that we created www.menehunes.co to highlight our venture. The Menehunes are now focused on travel, food, entrepreneurship and makeup.",
+            "location": "Honolulu, Hawaii",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 10,
+                "year": 2013
+            },
+            "ends_at": null,
+            "company": "Kokua.org",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "Co-Founder",
+            "description": "Kokua.org is a collection of leaders focused on building relationships and collaborations to form public private partnerships. This group focuses on paying it forward to help our community. See www.kokua.org for more info.\n\nWe also launched an annual event called AD UP Hawaii that is a mashup of AD2's annual pro bono campaign and Startup Weekend. www.AdUpHawaii.com\n\nhttp://www.midweek.com/hawaii-lifestyle-news-opinions/old-friends/evan-leong/",
+            "location": "Honolulu",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 9,
+                "year": 2013
+            },
+            "ends_at": null,
+            "company": "ADUP Hawaii",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "Co-Founder",
+            "description": "If Ad2 http://www.ad2honolulu.org/about-the-service/ and Startup Weekend www.http://startupweekend.org/ had a baby it would be ADUP Hawaii...a one day competition where marketing professionals donate their skills and time to create a pro bono marketing campaign for Hawaii 501c3 non profit organizations. The 2017 winner will earn over $100,000+ in cash and media placements and services for their non profit organization.",
+            "location": "Honolulu, Hawaii",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 10,
+                "year": 2007
+            },
+            "ends_at": null,
+            "company": "Standuppaddlesurf.net",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "Founder",
+            "description": "I founded this web portal in 2007 which focuses on what industry experts state is the fastest growing water sport in the world. SUPS.net provides product reviews, interviews with industry experts, product previews, race updates, etc and provides a unique web marketing platform for SUP manufacturers and vendors.",
+            "location": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 7,
+                "year": 2005
+            },
+            "ends_at": null,
+            "company": "Greater Good Inc",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "CEO",
+            "description": "Greater Good Inc was started as an initiative to promote social entrepreneurship and to bring greater engagement between the for profit and non profit business sectors. It started off as a radio show and internet podcast and expanded to articles in the Star Bulletin, MidWeek, Pacific Edge Magazine, Technology News Bytes and other publications. Next was Greater Good TV which aired on KGMB9/CBS and won a Telly Award for daytime programming. Last came the Greater Good Book which spent a short time as a Hawaii bestseller. Other awards include the SBA Region IX Small Business Journalist of the Year. \n\nWe did our last interview a few years ago however we are now working on Greater Good 2.0. This will be an initiative to bring together business people, non profit organizations, military and government to collaborate on public-private partnerships. If you are interested in participating and getting involved please message me.\n\nClick the link below for the story of how this came to life.",
+            "location": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2001
+            },
+            "ends_at": null,
+            "company": "Bubble Tea Supply",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "CEO",
+            "description": "My wife and I have been running this company since 2001 and it's been a fun ride. Click on the link below for the back story, etc.",
+            "location": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 9,
+                "year": 2013
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 9,
+                "year": 2018
+            },
+            "company": "Enerdigm",
+            "company_linkedin_profile_url": "https://www.linkedin.com/company/enerdigm-ventures/",
+            "company_facebook_profile_url": null,
+            "title": "Venture Partner",
+            "description": "In our venture capital fund, we focus on early stage companies in Hawaii and Silicon Valley.  We typically invest $100,000 to $1,000,000 in a single round.  When larger financing rounds are needed, we actively look to syndicate deals with other investment groups in our network.  Our goal is an accelerated, successful exit, for both company founders and investors.\n\nWe focus on the following areas:\n\nClean Technology\nSoftware companies focusing enterprise network\nService companies\nSpecial situations",
+            "location": "Honolulu",
+            "logo_url": "https://s3.us-west-000.backblazeb2.com/proxycurl/company/enerdigm-ventures/profile?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=0004d7f56a0400b0000000001%2F20250620%2Fus-west-000%2Fs3%2Faws4_request&X-Amz-Date=20250620T142401Z&X-Amz-Expires=1800&X-Amz-SignedHeaders=host&X-Amz-Signature=939c622d8517ad9efad551f38f5d8f11c089d84a8704988aecd6b00be0c8683f"
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2007
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2009
+            },
+            "company": "Hawaii School Guide",
+            "company_linkedin_profile_url": null,
+            "company_facebook_profile_url": null,
+            "title": "Co-Founder",
+            "description": "My wife and worked on this public private partnership between the Hawaii DOE, private schools, military, charitable foundations and parents to create this portal with all the schools in Hawaii from preschool to 12th grade. Unfortunately, this project launched right in the beginning of the great recession and ended up being mothballed. It works, but hasn't been updated in a while due to lack of funds.",
+            "location": null,
+            "logo_url": null
+        }
+    ],
+    "education": [
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2002
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2005
+            },
+            "field_of_study": "International Business",
+            "degree_name": "Executive MBA",
+            "school": "University of Hawai‘i - Shidler College of Business",
+            "school_linkedin_profile_url": null,
+            "school_facebook_profile_url": null,
+            "description": null,
+            "logo_url": "https://media.licdn.com/dms/image/C560BAQGd5SlKIwW2wQ/company-logo_400_400/0/1671230184392?e=1696464000&v=beta&t=yIqMP3vBPp4B0iPIu1LqGTbDFuQAeXWilnpXjRifFK0",
+            "grade": null,
+            "activities_and_societies": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2000
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2001
+            },
+            "field_of_study": "Business Administration and Management, General",
+            "degree_name": "Bachelor of Science (BS)",
+            "school": "Hawaii Pacific University",
+            "school_linkedin_profile_url": null,
+            "school_facebook_profile_url": null,
+            "description": null,
+            "logo_url": "https://media.licdn.com/dms/image/C560BAQHGWv0F5mK41A/company-logo_400_400/0/1673393477229?e=1696464000&v=beta&t=z30XjdJENpLVOnH4XIpluLOXy4XGDQh1ZDpqo7Kdu8k",
+            "grade": null,
+            "activities_and_societies": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 1991
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 1,
+                "year": 1993
+            },
+            "field_of_study": null,
+            "degree_name": null,
+            "school": "University of Oregon",
+            "school_linkedin_profile_url": null,
+            "school_facebook_profile_url": null,
+            "description": null,
+            "logo_url": "https://media.licdn.com/dms/image/C560BAQGOJc43HMtEhg/company-logo_400_400/0/1645138317939?e=1696464000&v=beta&t=L6KaK7Q2B9gwqtmyHXlVIPYuYanxXCIfVtaFLbFbMIQ",
+            "grade": null,
+            "activities_and_societies": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 1978
+            },
+            "ends_at": {
+                "day": 1,
+                "month": 1,
+                "year": 1991
+            },
+            "field_of_study": null,
+            "degree_name": "High School",
+            "school": "Punahou School",
+            "school_linkedin_profile_url": null,
+            "school_facebook_profile_url": null,
+            "description": null,
+            "logo_url": "https://media.licdn.com/dms/image/C4D0BAQHnYTpmbPNsTQ/company-logo_400_400/0/1519856296600?e=1696464000&v=beta&t=Z2wEN4_eUKhzqu3suD1pvoFL-vQpynXGHSLAW5Elk7U",
+            "grade": null,
+            "activities_and_societies": null
+        }
+    ],
+    "languages": [],
+    "languages_and_proficiencies": [],
+    "accomplishment_organisations": [
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2010
+            },
+            "ends_at": null,
+            "org_name": "Outrigger Canoe Club",
+            "title": "member",
+            "description": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2005
+            },
+            "ends_at": null,
+            "org_name": "Pacific Century Fellows",
+            "title": "Class of 2005",
+            "description": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2001
+            },
+            "ends_at": null,
+            "org_name": "Delta Mu Delta",
+            "title": "member",
+            "description": null
+        }
+    ],
+    "accomplishment_publications": [
+        {
+            "name": "The Greater Good: Life Lessons from Hawaii's Leaders",
+            "publisher": "2007",
+            "published_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2007
+            },
+            "description": null,
+            "url": "http://www.amazon.com/Greater-Good-Lessons-Hawaiis-Leaders/dp/0979676908/ref=sr_1_2?s=books&ie=UTF8&qid=1378252590&sr=1-2&keywords=the+greater+good+hawaii"
+        }
+    ],
+    "accomplishment_honors_awards": [
+        {
+            "title": "1st Place Team in Startup Weekend Honolulu and Global Startup Battle",
+            "issuer": "UP Global",
+            "issued_on": {
+                "day": 1,
+                "month": 11,
+                "year": 2015
+            },
+            "description": "I was the lead coach and a team member with my kids and family for Menehune Hat Clip. www.Menehunes.co Our team was the youngest to ever win a Startup Weekend and win the regionals in Global Startup Battle. Our region included the West Coast of the USA and Canada with power hubs like Silicon Valley, Boulder Colorado and others below.\n\nFredericton, Canada \nMontreal, Canada\nSherbrooke, Canada\nOkanagan, Canada\nOttawa-Gatineau, Canada\nQuebec, Canada\nShawinigan, Canada\nVancouver, Canada\nHalifax, Canada\nEugene / Springfield, USA\nPortland, USA\nSpokane, USA\nWillamette, USA\nBoise Valley, USA\nSeattle, USA\nBoulder, USA\nHonolulu, USA\nLas Cruces, USA\nLos Angeles, USA\\Pasadena, USA\nSacramento, USA\nSan Diego, USA\nSanta Clarita, USA\nSanta Fe, USA\nSummit County, USA\nBay Area, USA\nChandler, USA\nPhoenix, USA\nRedding, USA\nAlbuquerque, USA\nLas Vegas, USA\n\nhttp://www.globalstartupbattle.co/overview"
+        },
+        {
+            "title": "SBA Small Business Journalist of the Year",
+            "issuer": "U.S. Small Business Administration (SBA)",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2007
+            },
+            "description": "U.S. Small Business Administration’s (SBA) 2007 Small Business Journalists of the Year for Region IX which includes Arizona, California, Guam, Hawaii, and Nevada. The award is given to journalists who make a concerted effort to increase the public’s understanding of the importance of small business contributions to the U.S. economy."
+        },
+        {
+            "title": "Telly Award for Local TV and Cable",
+            "issuer": "Telly Awards",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2007
+            },
+            "description": "The Telly Awards is the premier award honoring the finest film and video productions, groundbreaking web commercials, videos and films, and outstanding local, regional, and cable TV commercials and programs.\n\nThis award was for programming excellence for Greater Good TV on KGMB9/CBS"
+        },
+        {
+            "title": "Three Outstanding Young People",
+            "issuer": "Rising Phoenix Jaycees",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2007
+            },
+            "description": "The Rising Phoenix Jaycees Annual Three Outstanding Young Persons (TOYP) Award is a prestigious award that recognizes and honors three Hawaii persons that exemplify the best attributes of our state’s young people, aged 18 through 40. The three honorees have the opportunity to compete on a national and international level."
+        },
+        {
+            "title": "40 under Forty",
+            "issuer": "Pacific Business News",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2006
+            },
+            "description": "The top 40 business leaders under 40 years old in Hawaii."
+        },
+        {
+            "title": "Greater Good Month",
+            "issuer": "Mayor of the City and County of Honolulu",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2006
+            },
+            "description": "The Mayor of Honolulu awarded a proclamation naming the \"Greater Good Month\". "
+        },
+        {
+            "title": "Paul C.T. Loo Young Alumni Award",
+            "issuer": "Hawaii Pacific University",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2006
+            },
+            "description": "Young Alumni Award for alumni who have graduated in the past five years and serves as an outstanding role model for future alumni (2006-2010)."
+        },
+        {
+            "title": "Top 50 High Tech Leader",
+            "issuer": "Pacific Technology Foundation and Technology News Network",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2006
+            },
+            "description": "The top 50 high tech leaders in Hawaii."
+        },
+        {
+            "title": "Best Taste Award",
+            "issuer": "Chefs Best",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2005
+            },
+            "description": "The ChefsBest Award for Best Taste is awarded to the brand rated highest overall among leading brands by independent professional chefs.\n\nWhen our judges determine that a food or food-related product is the best in its respective category, we honor it with a ChefsBest Award for Best Taste. Among leading brands, only one product in each category can be judged the best. If no clear winner emerges, no ChefsBest Award will be given."
+        },
+        {
+            "title": "Cum Laude",
+            "issuer": "HPU",
+            "issued_on": {
+                "day": 1,
+                "month": 7,
+                "year": 2001
+            },
+            "description": "Graduated with Honors."
+        },
+        {
+            "title": "Distinguished Award of Business Excellence",
+            "issuer": "Hawaii Pacific University",
+            "issued_on": {
+                "day": 1,
+                "month": 1,
+                "year": 2001
+            },
+            "description": "Award for outstanding students graduating from HPU with a business degree and pass a series of qualifications."
+        }
+    ],
+    "accomplishment_patents": [],
+    "accomplishment_courses": [],
+    "accomplishment_projects": [],
+    "accomplishment_test_scores": [],
+    "volunteer_work": [
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 10,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Co-Founder",
+            "cause": "EDUCATION",
+            "company": "AD UP Hawaii",
+            "company_linkedin_profile_url": null,
+            "description": "Developing servant leaders in the marketing industry through skills based volunteering and creating a pro bono marketing campaign for select Hawaii non profits. In 2017 the Blood Bank of Hawaii received a marketing campaign valued over $150,000, resulting in more awareness, donations and saving lives. \n\nConsistently, Hawaii non-profits rank Fundraising and Marketing as their top 2 needs. We’re bringing the best marketing professionals in Hawaii together to provide education and actionable marketing campaigns to the non-profits, assisting in both those needs.\n\nwww.aduphawaii.com",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2005
+            },
+            "ends_at": null,
+            "title": "Judge and Mentor",
+            "cause": "EDUCATION",
+            "company": "University of Hawaii Pacific Asian Center for Entrepreneurship PACE Business Plan Competition",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 7,
+                "year": 2013
+            },
+            "ends_at": null,
+            "title": "Virtual Professional-in-Residence (VPIR)",
+            "cause": "EDUCATION",
+            "company": "University of Hawaii Pacific Asian Center for Entrepreneurship",
+            "company_linkedin_profile_url": null,
+            "description": "The Virtual Professional-in-Residence (VPIR) program connects UH students and faculty with business professionals by way of electronic mail and phone. Besides education beyond the classroom, students may receive leads to job opportunities and valuable insight about a specific industry. This program also makes UH students, who are already interested in pursuing careers in entrepreneurship, accessible to business professionals.\n\nhttp://pace.shidler.hawaii.edu/vpir/evan-leong",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "board member (former)",
+            "cause": "EDUCATION",
+            "company": "University of Hawaii Alumni Association",
+            "company_linkedin_profile_url": null,
+            "description": "The University of Hawaiʻi Alumni Association promotes and supports the University of Hawaiʻi by connecting alumni and friends with the university and with each other, strengthening stakeholder relationships in the community, and inspiring pride among the University of Hawaiʻi ʻohana.",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "board member (former)",
+            "cause": "EDUCATION",
+            "company": "University of Hawaii Community Partnership",
+            "company_linkedin_profile_url": null,
+            "description": "UCP is an organization that fosters communication between the University of Hawaii President and the community.",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Chairman (former)",
+            "cause": null,
+            "company": "Hawaii Pacific University Paul C.T. Loo Award Dinner",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Keynote Speaker",
+            "cause": "EDUCATION",
+            "company": "Brigham Young University Hawaii Business Plan Competition",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "board member (former)",
+            "cause": "CHILDREN",
+            "company": "Boy Scouts of America Aloha Council’s Learning for Life",
+            "company_linkedin_profile_url": null,
+            "description": "The Learning for Life Corporation offers seven programs designed to support schools and community based organizations in their efforts to prepare youth to successfully handle the complexities of contemporary society and to enhance their self-confidence, motivation, and self-esteem. The seven programs focus on character education and career education. Learning for Life programs help youth develop social and life skills, assist in character development, and help youth formulate positive personal values. It prepares youth to make ethical decisions that will help them achieve their full potential. There are two program methods. We have six school based programs and one worksite based program.",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Founding pro bono website provider",
+            "cause": "CHILDREN",
+            "company": "Na Kama Kai",
+            "company_linkedin_profile_url": null,
+            "description": "Nā Kama Kai’s (Children of the Sea) mission is to empower youth by creating, conducting and supporting ocean-based programs, specifically targeting ocean safety and conservation awareness in order to increase the capacity of youth in the community through Hawaiian values, culture and environmental education.",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Vice President, GM and Coach",
+            "cause": "CHILDREN",
+            "company": "Manoa Youth Baseball League",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Coach",
+            "cause": "CHILDREN",
+            "company": "Punahou School Track Team",
+            "company_linkedin_profile_url": null,
+            "description": "Coach for JV and Varsity pole vaulting for both boys and girls. State Champs!",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Mentor",
+            "cause": "EDUCATION",
+            "company": "Camp BizGym",
+            "company_linkedin_profile_url": null,
+            "description": "Camp BizGym is a 1-week day camp for K-12 students to create a short video on a business idea of their own to gain funding donations through online “crowd-funding” platforms.\n\nParticipants only need to come with an idea for a business they are interested in pursuing. Students will create a script, shoot video, edit and implement a viral media strategy to get their projects funded through “crowd-funding” sites such as Indiegogo.com or kickstarter.com.",
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "mentor",
+            "cause": "EDUCATION",
+            "company": "Punahou School Entrepreneurship Class",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": null,
+            "ends_at": null,
+            "title": "Co-founder",
+            "cause": "POLITICS",
+            "company": "Senatorfong.com",
+            "company_linkedin_profile_url": null,
+            "description": "We developed a memorial site for Senator Hiram Fong, the first Asian American U.S. Senator.",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 4,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Volunteer Coach",
+            "cause": "EDUCATION",
+            "company": "Hawaii Resiliancy Challenge",
+            "company_linkedin_profile_url": null,
+            "description": "http://resiliencyhi.weebly.com/about.html\n\nWho: College Students in Hawaii\n\nWhat: Design Challenge with diversified teams\n\nWhy: After Typhoon Haiyan hit the Philippines in November 2013, Oceanit, an innovative, Hawaii-based firm, was concerned with how Hawaii would deal with such a catastrophic event. Specifically, how would the people of Hawaii obtain drinkable water? \n\nAnd the idea of the Hawaii Resiliency Challenge was born. \n\nWith assistance and funding from Oceanit and the Office of Naval Research, a group of students from the University of Hawaii chapter of Chi Epsilon, a national civil engineering honor society, helped put this idea into action.",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 1,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Assistant Coach",
+            "cause": "CHILDREN",
+            "company": "Wai Kahala Baseball",
+            "company_linkedin_profile_url": null,
+            "description": null,
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 10,
+                "year": 2012
+            },
+            "ends_at": null,
+            "title": "Mentor and Coach",
+            "cause": "EDUCATION",
+            "company": "Techstars Startup Weekend",
+            "company_linkedin_profile_url": "https://www.linkedin.com/company/techstarsstartupweekend/",
+            "description": null,
+            "logo_url": "https://media.licdn.com/dms/image/C4D0BAQF3L8PdelY3xg/company-logo_400_400/0/1607392229035?e=1696464000&v=beta&t=hsd2uPO0mpjWXyvDjYs3u8Yetmlm21zryRX_NYkkUbk"
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 3,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Advisory Committee",
+            "cause": "ARTS_AND_CULTURE",
+            "company": "Manoa Heritage Center",
+            "company_linkedin_profile_url": null,
+            "description": "Advisory committee for the development of Kualii at the Manoa Heritage Center.",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 4,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Coach and Mentor",
+            "cause": "EDUCATION",
+            "company": "Annual Statewide DOE High School Marketing Plan Performance-Based Assessments",
+            "company_linkedin_profile_url": null,
+            "description": "Coach for High School teams competing in an annual marketing plan challenge. ",
+            "logo_url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 11,
+                "year": 2014
+            },
+            "ends_at": null,
+            "title": "Panel Speaker",
+            "cause": "EDUCATION",
+            "company": "Punahou Alumni Association Entrepreneur Springboard Event (November 5, 2014)",
+            "company_linkedin_profile_url": null,
+            "description": "https://www.youtube.com/watch?v=N0ghQrjDxDM&feature=youtu.be\n\nOur hope is that this panel will show young alumni that entrepreneurs come from a diverse set of backgrounds and that there are many ways to be entrepreneurial. We want to have open discussion around the rewards/challenges of entrepreneurship in the hopes that what you share will resonate with some of our young alumni. Ultimately, we are hoping to make a case for entrepreneurship as a life path and want to encourage everyone in attendance to reflect upon whatever path they are currently on.",
+            "logo_url": null
+        }
+    ],
+    "certifications": [
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 11,
+                "year": 2022
+            },
+            "ends_at": null,
+            "name": "Internal Family Systems (IFS) - Certified IFS Practitioner, Level 1 & 2 Completion",
+            "license_number": null,
+            "display_source": "ifs-institute.com",
+            "authority": "IFS Institute",
+            "url": "https://ifs-institute.com/practitioners/all/116795"
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 5,
+                "year": 2022
+            },
+            "ends_at": null,
+            "name": "Certified Brainspotting Practitioner",
+            "license_number": null,
+            "display_source": "brainspotting.com",
+            "authority": "Brainspotting",
+            "url": "https://brainspotting.com/directory/name/evan-leong/"
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 9,
+                "year": 2021
+            },
+            "ends_at": null,
+            "name": "Fundamentals of Shamanism",
+            "license_number": null,
+            "display_source": null,
+            "authority": "Shamanic Spirit Medicine",
+            "url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 8,
+                "year": 2021
+            },
+            "ends_at": null,
+            "name": "Clinical Applications of Polyvagal Theory in Trauma Treatment",
+            "license_number": null,
+            "display_source": null,
+            "authority": "PESI",
+            "url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 5,
+                "year": 2021
+            },
+            "ends_at": null,
+            "name": "NLP Practitioner Completion",
+            "license_number": null,
+            "display_source": null,
+            "authority": null,
+            "url": null
+        },
+        {
+            "starts_at": {
+                "day": 1,
+                "month": 7,
+                "year": 2019
+            },
+            "ends_at": null,
+            "name": "Employment Agency Operator",
+            "license_number": null,
+            "display_source": null,
+            "authority": "State of Hawaii",
+            "url": null
+        }
+    ],
+    "connections": null,
+    "people_also_viewed": [
+        {
+            "link": "https://www.linkedin.com/in/glenn-wakai-7395a11b2",
+            "name": "Glenn Wakai",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/aminleiman",
+            "name": "Amin Leiman",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/imanuyeda",
+            "name": "Iman Uyeda",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/coreenlee",
+            "name": "Coreen K. Lee",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/sidney-higa-16bb3b16",
+            "name": "Sidney Higa",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/cynthiayamasaki",
+            "name": "Cynthia Yamasaki",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/alan-s-okimoto-9814b5",
+            "name": "Alan S. Okimoto",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/myles-shibata-66ab7840",
+            "name": "Myles Shibata",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/jason-yoshimi-4103b6",
+            "name": "Jason Yoshimi",
+            "summary": null,
+            "location": null
+        },
+        {
+            "link": "https://www.linkedin.com/in/ericsschang",
+            "name": "Eric Chang",
+            "summary": null,
+            "location": null
+        }
+    ],
+    "recommendations": [],
+    "activities": [],
+    "similarly_named_profiles": [
+        {
+            "name": "Evan Leong",
+            "link": "https://www.linkedin.com/in/evanleong5",
+            "summary": "IT Student at Rutgers University",
+            "location": "New York City Metropolitan Area"
+        },
+        {
+            "name": "Evan Leong",
+            "link": "https://www.linkedin.com/in/evan-leong-6997a910",
+            "summary": "Filmmaker\nLINSANITY | SNAKEHEAD | OBJ:IAMMORE\nUNINTERRUPTED | NY TIMES | L'OREAL",
+            "location": "Manhattan Beach, CA"
+        },
+        {
+            "name": "Evan Leong",
+            "link": "https://ie.linkedin.com/in/evan-leong-7265a51a6",
+            "summary": "Final Year Business Student Majoring in Accounting and Finance At University of Limerick",
+            "location": "Clonmel"
+        },
+        {
+            "name": "Evan Leong",
+            "link": "https://www.linkedin.com/in/evanmayo89",
+            "summary": "Helping product & customer facing teams collaborate on customer feedback",
+            "location": "Menlo Park, CA"
+        }
+    ],
+    "articles": [],
+    "groups": [],
+    "skills": [],
+    "inferred_salary": null,
+    "gender": null,
+    "birth_date": null,
+    "industry": null,
+    "extra": null,
+    "interests": [],
+    "personal_emails": [],
+    "personal_numbers": []
+}

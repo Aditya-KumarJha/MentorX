@@ -1,0 +1,223 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTheme } from '../context/ThemeContext';
+import { motion } from 'framer-motion';
+import { FaSearch, FaUserGraduate } from 'react-icons/fa';
+import { Link, useSearchParams } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from 'axios';
+import Loader from '../components/Loader';
+import 'remixicon/fonts/remixicon.css';
+
+const careerOptions = ['All', 'Machine Learning', 'Data Science', 'Blockchain', 'Full Stack', 'Cybersecurity', 'App Development'];
+
+const MentorAI = () => {
+  const { darkMode, toggleDarkMode } = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get('search') || '');
+  const [careerFilter, setCareerFilter] = useState(searchParams.get('career') || 'All');
+  const [itemsToShow, setItemsToShow] = useState(12);
+  const [mentors, setMentors] = useState([]);
+  const [displayedMentors, setDisplayedMentors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState([]);
+
+  const shuffleArray = (arr) => [...arr].sort(() => 0.5 - Math.random());
+
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        const res = await axios.get('http://localhost:5050/api/mentors');
+        const fetched = Array.isArray(res.data) ? res.data : res.data.mentors || [];
+        setMentors(shuffleArray(fetched));
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+      }
+    };
+    fetchMentors();
+  }, []);
+
+  useEffect(() => {
+    setSearchParams({
+      search: search || '',
+      career: careerFilter !== 'All' ? careerFilter : ''
+    });
+  }, [search, careerFilter]);
+
+  const filteredMentors = useMemo(() => {
+    const normalizedCareer = careerFilter.toLowerCase();
+    return mentors.filter((mentor) => {
+      const matchesCareer =
+        normalizedCareer === 'all' ||
+        (mentor.expertiseTags &&
+          mentor.expertiseTags.some((tag) => tag.toLowerCase() === normalizedCareer));
+      const matchesSearch = mentor.fullName?.toLowerCase().includes(search.toLowerCase());
+      return matchesCareer && matchesSearch;
+    });
+  }, [mentors, careerFilter, search]);
+
+  useEffect(() => {
+    setDisplayedMentors(filteredMentors.slice(0, itemsToShow));
+  }, [filteredMentors, itemsToShow]);
+
+  const fetchMoreMentors = () => {
+    setTimeout(() => setItemsToShow((prev) => prev + 9), 500);
+  };
+
+  const handleImageError = (e) => {
+    e.target.src = '/noimage.jpg';
+  };
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+    );
+  };
+
+  if (loading) return <Loader />;
+
+  return (
+    <div className={`min-h-screen flex flex-col md:flex-row ${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full md:w-1/2 p-6 h-[45vh] md:h-screen overflow-hidden border-b md:border-b-0 md:border-r"
+        style={{ borderColor: darkMode ? '#3f3f46' : '#e5e7eb' }}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-3xl font-bold flex items-center gap-2">
+            <i className={`ri-robot-2-line text-3xl animate-bounce`} />
+            <span
+              className="bg-gradient-to-r from-cyan-400 to-rose-500 bg-clip-text text-transparent"
+            >
+              MentorAI
+            </span>
+          </h2>
+          <button onClick={toggleDarkMode} className="text-2xl hover:scale-110 transition-transform">
+            <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
+          </button>
+        </div>
+        <div
+          className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
+            darkMode
+              ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
+              : 'bg-gray-100 border border-gray-300 text-gray-500'
+          }`}
+        >
+          (AI chat feature coming soon)
+        </div>
+      </motion.div>
+
+      <div
+        id="mentor-scrollable-div"
+        className="w-full md:w-1/2 h-[55vh] md:h-screen overflow-y-auto px-6 py-6"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6"
+        >
+          <div className="relative w-full sm:w-[45%] text-sm">
+            <FaSearch className="absolute top-3 left-3 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setItemsToShow(12);
+              }}
+              placeholder="Search mentors..."
+              className={`w-full pl-10 px-3 py-2 rounded-md border outline-none focus:ring-2 focus:ring-purple-500 transition text-sm ${
+                darkMode
+                  ? 'bg-zinc-800 border-zinc-600 text-white'
+                  : 'bg-white border-zinc-300 text-zinc-900'
+              }`}
+            />
+          </div>
+          <div className="relative w-full sm:w-[45%] text-sm">
+            <select
+              value={careerFilter}
+              onChange={(e) => {
+                setCareerFilter(e.target.value);
+                setItemsToShow(12);
+              }}
+              className={`w-full px-3 py-2 rounded-md border outline-none appearance-none focus:ring-2 focus:ring-purple-500 transition text-sm ${
+                darkMode
+                  ? 'bg-zinc-800 border-zinc-600 text-white'
+                  : 'bg-white border-zinc-300 text-zinc-900'
+              }`}
+            >
+              {careerOptions.map((option, i) => (
+                <option key={i} value={option}>
+                  {option === 'All' ? 'All Careers' : option}
+                </option>
+              ))}
+            </select>
+            <FaUserGraduate className="absolute top-3 right-3 text-gray-400 pointer-events-none" />
+          </div>
+        </motion.div>
+
+        <InfiniteScroll
+          dataLength={displayedMentors.length}
+          next={fetchMoreMentors}
+          hasMore={displayedMentors.length < filteredMentors.length}
+          loader={<p className="text-center text-gray-400 mt-4">Loading more mentors...</p>}
+          scrollableTarget="mentor-scrollable-div"
+        >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-8">
+            {displayedMentors.length === 0 ? (
+              <p className="text-center text-gray-400 w-full">No mentors found.</p>
+            ) : (
+              displayedMentors.map((mentor, i) => (
+                <motion.div
+                  key={mentor._id || i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: darkMode
+                      ? '0 4px 30px rgba(255,255,255,0.05)'
+                      : '0 4px 30px rgba(0,0,0,0.08)',
+                  }}
+                  transition={{ duration: 0.3, delay: i * 0.02 }}
+                  className={`relative rounded-xl overflow-hidden border shadow-lg ${
+                    darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200'
+                  } transition-all duration-300`}
+                >
+                  <button
+                    onClick={() => toggleFavorite(mentor._id || i)}
+                    className="absolute top-2 right-2 text-xl z-10"
+                  >
+                    <i
+                      className={`ri-heart-${favorites.includes(mentor._id || i) ? 'fill text-rose-500' : 'line text-gray-400'} transition`}
+                    />
+                  </button>
+
+                  <Link to={`/mentor/${encodeURIComponent(mentor.fullName)}`}>
+                    <img
+                      src={mentor.profilePic || '/noimage.jpg'}
+                      onError={handleImageError}
+                      alt={mentor.fullName}
+                      className="h-[25vh] w-full object-cover"
+                    />
+                    <div className="p-2">
+                      <h3 className="text-[0.9rem] font-semibold truncate">{mentor.fullName}</h3>
+                      <p className="text-[0.75rem] text-gray-400 truncate">{mentor.headline}</p>
+                      <p className="text-[0.65rem] text-gray-300 mt-1 truncate">
+                        {mentor.expertiseTags?.join(', ')}
+                      </p>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))
+            )}
+          </div>
+        </InfiniteScroll>
+      </div>
+    </div>
+  );
+};
+
+export default MentorAI;

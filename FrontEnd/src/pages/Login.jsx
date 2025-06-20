@@ -6,7 +6,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '../context/ThemeContext';
-import axios from '../utils/axios'; // ✅ Your Axios instance with baseURL
+import axios from '../utils/axios';
 
 const Login = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -22,7 +22,7 @@ const Login = () => {
 
     try {
       const res = await axios.post('/api/auth/login', {
-        email: emailOrUsername.trim(), // use only email
+        email: emailOrUsername.trim(),
         password,
       });
 
@@ -57,24 +57,26 @@ const Login = () => {
       <ToastContainer />
 
       {/* Header */}
-      <div className={`flex items-center justify-between px-6 py-4 shadow ${darkMode ? "bg-zinc-800" : "bg-white"}`}>
-        <div className="pt-4 flex flex-col items-center justify-center text-center w-full">
-          <h1 className="text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+      <div className={`flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-4 shadow ${darkMode ? "bg-zinc-800" : "bg-white"}`}>
+        <div className="pt-2 flex-1 text-center sm:text-left">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
             MentorX Login
           </h1>
-          <p className={`mt-2 text-lg font-bold ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
+          <p className={`mt-1 sm:mt-2 text-sm sm:text-base font-semibold ${darkMode ? "text-gray-400" : "text-gray-600"}`}>
             Your gateway to guided mentorship and career growth
           </p>
         </div>
-        <button onClick={toggleDarkMode} className="p-2 rounded-full hover:scale-110 transition">
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
+        <div className="mt-4 sm:mt-0">
+          <button onClick={toggleDarkMode} className="p-2 rounded-full hover:scale-110 transition">
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Main */}
       <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-160px)]">
         {/* Left Visual */}
-        <div className="relative flex flex-col justify-center items-center px-10 text-center overflow-hidden">
+        <div className="relative flex flex-col justify-center items-center px-4 sm:px-10 text-center overflow-hidden">
           <div
             className="absolute inset-0 z-0 bg-cover bg-center opacity-30 blur-sm transition-all duration-700"
             style={{ backgroundImage: `url('${bgImage}')` }}
@@ -88,7 +90,7 @@ const Login = () => {
           >
             <motion.h2
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              className={`text-4xl md:text-5xl font-extrabold mb-6 bg-clip-text text-transparent ${
+              className={`text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6 bg-clip-text text-transparent ${
                 darkMode
                   ? "bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400"
                   : "bg-gradient-to-r from-indigo-600 to-pink-500"
@@ -99,7 +101,7 @@ const Login = () => {
             <motion.p
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               transition={{ delay: 0.2 }}
-              className="text-base md:text-lg tracking-wide font-light max-w-md mx-auto"
+              className="text-sm sm:text-base md:text-lg tracking-wide font-light max-w-xs sm:max-w-md mx-auto"
             >
               Unlock personalized mentorship and AI-powered career guidance with MentorX.
             </motion.p>
@@ -107,17 +109,17 @@ const Login = () => {
         </div>
 
         {/* Right Form */}
-        <div className="flex items-center justify-center px-6">
+        <div className="flex items-center justify-center px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={`shadow-xl rounded-2xl p-8 w-full max-w-sm z-10 ${darkMode ? "bg-zinc-800" : "bg-white"}`}
+            className={`shadow-xl rounded-2xl p-6 sm:p-8 w-full max-w-xs sm:max-w-sm z-10 ${darkMode ? "bg-zinc-800" : "bg-white"}`}
           >
-            <h3 className="text-2xl font-semibold mb-6 text-center">Login to MentorX</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold mb-6 text-center">Login to MentorX</h3>
             <form onSubmit={handleLogin}>
               {/* Email Input */}
-              <label className="block text-md mb-2">Email</label>
+              <label className="block text-sm mb-2">Email</label>
               <div className="relative mb-4 group">
                 <FaUser className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 transition-all" />
                 <input
@@ -128,7 +130,7 @@ const Login = () => {
                     setEmailOrUsername(e.target.value);
                     setErrorMsg('');
                   }}
-                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition duration-300 ${
+                  className={`w-full pl-10 px-3 py-2 rounded border text-sm outline-none transition duration-300 ${
                     darkMode
                       ? "bg-zinc-700 text-white border-zinc-600"
                       : "bg-white text-zinc-900 border-zinc-300"
@@ -137,7 +139,7 @@ const Login = () => {
               </div>
 
               {/* Password */}
-              <label className="block text-md mb-2">Password</label>
+              <label className="block text-sm mb-2">Password</label>
               <div className="relative mb-6 group">
                 <FaLock className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 transition-all" />
                 <input
@@ -148,7 +150,7 @@ const Login = () => {
                     setPassword(e.target.value);
                     setErrorMsg('');
                   }}
-                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition duration-300 ${
+                  className={`w-full pl-10 px-3 py-2 rounded border text-sm outline-none transition duration-300 ${
                     darkMode
                       ? "bg-zinc-700 text-white border-zinc-600"
                       : "bg-white text-zinc-900 border-zinc-300"
@@ -172,7 +174,7 @@ const Login = () => {
             )}
 
             {/* Signup Link */}
-            <p className="text-md mt-6 text-center">
+            <p className="text-sm sm:text-md mt-6 text-center">
               Don’t have an account?{' '}
               <span
                 className="text-indigo-500 cursor-pointer hover:underline"
@@ -186,7 +188,7 @@ const Login = () => {
       </div>
 
       {/* Footer */}
-      <footer className={`px-6 py-6 text-center text-sm border-t ${darkMode ? 'text-gray-400 border-zinc-700' : 'text-gray-500 border-zinc-200'}`}>
+      <footer className={`px-4 sm:px-6 py-6 text-center text-xs sm:text-sm border-t ${darkMode ? 'text-gray-400 border-zinc-700' : 'text-gray-500 border-zinc-200'}`}>
         MentorX • Built with Passion • © {new Date().getFullYear()}
       </footer>
     </div>
