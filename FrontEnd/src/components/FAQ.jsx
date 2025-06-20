@@ -52,7 +52,7 @@ const FAQ = () => {
         Frequently Asked Questions
       </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {faqs.map((faq, i) => (
           <motion.div
             key={i}
@@ -60,7 +60,8 @@ const FAQ = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.2, duration: 0.5 }}
             viewport={{ once: false, amount: 0.3 }}
-            className={`p-6 rounded-lg shadow-md border ${borderColor} ${cardColor}`}
+            whileHover={{ scale: 1.1 }}
+            className={`p-6 rounded-lg shadow-md border ${borderColor} ${cardColor} transition-transform duration-300 cursor-pointer`}
           >
             <div className="flex items-start gap-4">
               {faq.icon}

@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
-import TestModel from './models/TestModel.js'; 
+import authRoutes from './routes/authRoutes.js';
 
 // Load env variables
 dotenv.config();
@@ -12,23 +12,17 @@ connectDB();
 
 // App setup
 const app = express();
+
+// Middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Test Route
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Default route
 app.get('/', (req, res) => {
   res.send('MentorX Backend is running ✅');
-});
-
-app.get('/test-mongo', async (req, res) => {
-    try {
-      const doc = new TestModel({ name: 'Aditya Test' });
-      await doc.save();
-      res.send('✅ MongoDB insert successful!');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('❌ MongoDB insert failed.');
-    }
 });
 
 // Start Server

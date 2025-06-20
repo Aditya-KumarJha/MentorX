@@ -4,8 +4,9 @@ import { Sun, Moon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import axios from '../utils/axios'; // ✅ Axios base URL configured here
 import { useTheme } from '../context/ThemeContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -13,30 +14,36 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const exists = users.find((u) => u.email === email);
-    if (exists) {
-      setErrorMsg('⚠️ Email already registered.');
-      toast.error('⚠️ Email already registered.', {
+    setLoading(true);
+    try {
+      const res = await axios.post('/api/auth/register', {
+        name: name.trim(),
+        email: email.trim(),
+        password,
+      });
+
+      toast.success(res.data.message || '🎉 Signup successful!', {
         position: 'top-center',
         autoClose: 3000,
         theme: darkMode ? 'dark' : 'light',
       });
-    } else {
-      const newUser = { name, email, password };
-      localStorage.setItem('users', JSON.stringify([...users, newUser]));
-      localStorage.setItem('userEmail', email);
-      localStorage.setItem('userName', name);
-      toast.success('🎉 Signup successful!', {
+
+      setTimeout(() => navigate('/login'), 1500);
+    } catch (error) {
+      const msg = error.response?.data?.message || 'Something went wrong ❌';
+      setErrorMsg(msg);
+      toast.error(msg, {
         position: 'top-center',
         autoClose: 3000,
         theme: darkMode ? 'dark' : 'light',
       });
-      setTimeout(() => navigate('/dashboard'), 1500);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,12 +75,7 @@ const Signup = () => {
             style={{ backgroundImage: `url('/Signup.jpg')` }}
           ></div>
 
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            transition={{ duration: 0.8 }}
-            className="z-10"
-          >
+          <motion.div initial="hidden" animate="visible" transition={{ duration: 0.8 }} className="z-10">
             <motion.h2
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
               className={`text-4xl md:text-5xl font-extrabold mb-6 bg-clip-text text-transparent ${
@@ -107,8 +109,9 @@ const Signup = () => {
               {/* Name */}
               <label className="block text-md mb-2">Name</label>
               <div className="relative mb-4 group">
-                <FaUser className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 group-hover:drop-shadow-[0_0_6px_#6366f1] transition-all" />
+                <FaUser className="absolute left-3 top-3 text-gray-400 transition-all" />
                 <input
+                  autoFocus
                   type="text"
                   required
                   value={name}
@@ -116,10 +119,10 @@ const Signup = () => {
                     setName(e.target.value);
                     setErrorMsg('');
                   }}
-                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition duration-300 group-hover:shadow ${
+                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition ${
                     darkMode
-                      ? 'bg-zinc-700 text-white border-zinc-600 focus:ring-2 focus:ring-indigo-400'
-                      : 'bg-white text-zinc-900 border-zinc-300 focus:ring-2 focus:ring-indigo-500'
+                      ? 'bg-zinc-700 text-white border-zinc-600'
+                      : 'bg-white text-zinc-900 border-zinc-300'
                   }`}
                 />
               </div>
@@ -127,7 +130,7 @@ const Signup = () => {
               {/* Email */}
               <label className="block text-md mb-2">Email</label>
               <div className="relative mb-4 group">
-                <FaEnvelope className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 group-hover:drop-shadow-[0_0_6px_#6366f1] transition-all" />
+                <FaEnvelope className="absolute left-3 top-3 text-gray-400 transition-all" />
                 <input
                   type="email"
                   required
@@ -136,10 +139,10 @@ const Signup = () => {
                     setEmail(e.target.value);
                     setErrorMsg('');
                   }}
-                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition duration-300 group-hover:shadow ${
+                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition ${
                     darkMode
-                      ? 'bg-zinc-700 text-white border-zinc-600 focus:ring-2 focus:ring-indigo-400'
-                      : 'bg-white text-zinc-900 border-zinc-300 focus:ring-2 focus:ring-indigo-500'
+                      ? 'bg-zinc-700 text-white border-zinc-600'
+                      : 'bg-white text-zinc-900 border-zinc-300'
                   }`}
                 />
               </div>
@@ -147,7 +150,7 @@ const Signup = () => {
               {/* Password */}
               <label className="block text-md mb-2">Password</label>
               <div className="relative mb-6 group">
-                <FaLock className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 group-hover:drop-shadow-[0_0_6px_#6366f1] transition-all" />
+                <FaLock className="absolute left-3 top-3 text-gray-400 transition-all" />
                 <input
                   type="password"
                   required
@@ -156,10 +159,10 @@ const Signup = () => {
                     setPassword(e.target.value);
                     setErrorMsg('');
                   }}
-                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition duration-300 group-hover:shadow ${
+                  className={`w-full pl-10 px-4 py-2 rounded border text-sm outline-none transition ${
                     darkMode
-                      ? 'bg-zinc-700 text-white border-zinc-600 focus:ring-2 focus:ring-indigo-400'
-                      : 'bg-white text-zinc-900 border-zinc-300 focus:ring-2 focus:ring-indigo-500'
+                      ? 'bg-zinc-700 text-white border-zinc-600'
+                      : 'bg-white text-zinc-900 border-zinc-300'
                   }`}
                 />
               </div>
@@ -167,23 +170,22 @@ const Signup = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full py-2 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-semibold hover:brightness-110 hover:scale-[1.03] hover:shadow-[0_0_12px_rgba(99,102,241,0.6)] transition duration-300"
+                disabled={loading}
+                className="w-full py-2 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-semibold hover:scale-105 transition"
               >
-                Sign up now
+                {loading ? 'Signing up...' : 'Sign up now'}
               </button>
             </form>
 
-            {/* Error Message */}
             {errorMsg && (
               <p className="text-red-500 text-sm mt-4 text-center">{errorMsg}</p>
             )}
 
-            {/* Login Link */}
             <p className="text-md mt-6 text-center">
-              Already have an account?{" "}
+              Already have an account?{' '}
               <span
                 className="text-indigo-500 cursor-pointer hover:underline"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate('/login')}
               >
                 Login
               </span>
@@ -193,11 +195,7 @@ const Signup = () => {
       </div>
 
       {/* Footer */}
-      <footer
-        className={`px-6 py-6 text-center text-sm border-t ${
-          darkMode ? 'text-gray-400 border-zinc-700' : 'text-gray-500 border-zinc-200'
-        }`}
-      >
+      <footer className={`px-6 py-6 text-center text-sm border-t ${darkMode ? 'text-gray-400 border-zinc-700' : 'text-gray-500 border-zinc-200'}`}>
         MentorX • Empowering Careers • © {new Date().getFullYear()}
       </footer>
     </div>
