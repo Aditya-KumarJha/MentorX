@@ -3,9 +3,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db.js';
+
 import authRoutes from './routes/authRoutes.js';
 import proxycurlRouter from './routes/proxycurl.js';
 import mentorRoutes from './routes/mentorRoutes.js';
+import userRoutes from './routes/userRoutes.js'; 
 
 // Load environment variables
 dotenv.config();
@@ -19,11 +21,12 @@ const app = express();
 // Middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());
-app.use('/api/mentors', mentorRoutes);
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/mentors', mentorRoutes);
 app.use('/api/proxycurl', proxycurlRouter);
+app.use('/api/users', userRoutes); 
 
 // Health Check Route
 app.get('/', (req, res) => {

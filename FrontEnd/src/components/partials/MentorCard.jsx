@@ -2,35 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
+import { useFavorites } from '../../context/FavouritesContext';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'remixicon/fonts/remixicon.css';
 
-const MentorCard = ({ mentor, index, isFavorite, onToggleFavorite }) => {
+const MentorCard = ({ mentor, index }) => {
   const { darkMode } = useTheme();
+  const { favoriteIds, toggleFavorite } = useFavorites();
   const [imgSrc, setImgSrc] = useState(mentor.profilePic || '/noimage.jpg');
-  const [localFavorite, setLocalFavorite] = useState(isFavorite);
+  const [localFavorite, setLocalFavorite] = useState(false);
 
+  // Safely check if mentor is in favorites
   useEffect(() => {
-    setLocalFavorite(isFavorite);
-  }, [isFavorite]);
+    if (Array.isArray(favoriteIds)) {
+      setLocalFavorite(favoriteIds.includes(mentor._id));
+    }
+  }, [favoriteIds, mentor._id]);
 
-  const handleFavoriteClick = (e) => {
+  const handleFavoriteClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const updated = !localFavorite;
-    setLocalFavorite(updated);
-    onToggleFavorite(mentor._id || index);
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-    if (updated) {
-      toast.success('✅ Added to Favorites', {
+    try {
+      const msg = await toggleFavorite(mentor._id);
+      const isNowFav = Array.isArray(favoriteIds) && !favoriteIds.includes(mentor._id);
+      setLocalFavorite(isNowFav);
+
+      toast(isNowFav ? '✅ Added to Favorites' : '❌ Removed from Favorites', {
+        type: isNowFav ? 'success' : 'error',
         position: 'top-right',
         autoClose: 2500,
         theme: darkMode ? 'dark' : 'light',
       });
-    } else {
-      toast.error('❌ Removed from Favorites', {
+    } catch (err) {
+      console.error('❌ Error toggling favorite:', err);
+      toast.error('Something went wrong.', {
         position: 'top-right',
         autoClose: 2500,
         theme: darkMode ? 'dark' : 'light',

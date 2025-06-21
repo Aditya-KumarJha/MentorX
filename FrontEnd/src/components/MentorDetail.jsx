@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTheme } from '../context/ThemeContext';
+import { useFavorites } from '../context/FavouritesContext';
 import Loader from '../components/Loader';
 import MentorCard from '../components/partials/MentorCard';
 import { toast } from 'react-toastify';
@@ -12,13 +13,12 @@ const MentorDetail = () => {
   const { name } = useParams();
   const navigate = useNavigate();
   const { darkMode, toggleDarkMode } = useTheme();
+  const { favoriteIds, toggleFavorite } = useFavorites();
   const [mentor, setMentor] = useState(null);
   const [similarMentors, setSimilarMentors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
   const toastIdRef = useRef(null);
 
-  // Shuffle helper
   const shuffleArray = (arr) => [...arr].sort(() => 0.5 - Math.random());
 
   useEffect(() => {
@@ -48,22 +48,40 @@ const MentorDetail = () => {
     e.target.src = '/noimage.jpg';
   };
 
-  const handleToggleFavorite = () => {
-    const updated = !isFavorite;
-    setIsFavorite(updated);
+  const handleToggleFavorite = async () => {
+    if (!mentor) return;
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.warn('⚠️ Please log in to favorite mentors', {
+        position: 'top-right',
+        autoClose: 2000,
+        theme: darkMode ? 'dark' : 'light',
+      });
+      return;
+    }
 
-    if (toastIdRef.current !== null) toast.dismiss(toastIdRef.current);
-
-    toastIdRef.current = toast(updated ? '❤️ Added to Favorites' : '❌ Removed from Favorites', {
-      position: 'top-right',
-      autoClose: 2500,
-      theme: darkMode ? 'dark' : 'light',
-      type: updated ? 'success' : 'error',
-    });
+    try {
+      const res = await toggleFavorite(mentor._id);
+      toast(res.includes('Removed') ? '❌ Removed from Favorites' : '❤️ Added to Favorites', {
+        type: res.includes('Removed') ? 'error' : 'success',
+        position: 'top-right',
+        autoClose: 2500,
+        theme: darkMode ? 'dark' : 'light',
+      });
+    } catch (err) {
+      console.error('Favorite toggle error:', err);
+      toast.error('❌ Something went wrong', {
+        position: 'top-right',
+        autoClose: 2500,
+        theme: darkMode ? 'dark' : 'light',
+      });
+    }
   };
 
   if (loading) return <Loader />;
   if (!mentor) return <p className="text-center text-gray-400 mt-10">Mentor not found.</p>;
+
+  const isFavorite = favoriteIds.includes(mentor._id);
 
   return (
     <div className={`${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'} min-h-screen`}>
@@ -77,7 +95,12 @@ const MentorDetail = () => {
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 pt-6 pb-16">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-7xl mx-auto px-4 pt-6 pb-16"
+      >
         {/* Top Info */}
         <div className="flex flex-col md:flex-row gap-8">
           <div className="relative w-full md:w-[300px]">
@@ -128,7 +151,7 @@ const MentorDetail = () => {
           </div>
         </div>
 
-        {/* Info Sections */}
+        {/* Info Sections (unchanged) */}
         <div className="mt-14 flex flex-col md:flex-row gap-12">
           <div className="flex-1 space-y-12">
             {mentor.education?.length > 0 && (
@@ -149,7 +172,7 @@ const MentorDetail = () => {
             {mentor.certifications?.length > 0 && (
               <div>
                 <h3 className="text-xl font-semibold mb-4 underline underline-offset-4 decoration-indigo-500 flex items-center gap-2 hover:text-indigo-500 transition">
-                  <i className="ri-award-line animate-bounce" /> Certifications
+                  <i className="ri-award-line" /> Certifications
                 </h3>
                 <ul className="space-y-2 text-sm">
                   {mentor.certifications.map((cert, i) => (
@@ -195,7 +218,6 @@ const MentorDetail = () => {
             )}
           </div>
         </div>
-
         {/* Similar Mentors */}
         {similarMentors.length > 0 && (
           <div className="mt-20 space-y-6">
@@ -217,14 +239,19 @@ const MentorDetail = () => {
                     className="min-w-[250px] max-w-[250px] cursor-pointer"
                     onClick={() => navigate(`/mentor/${encodeURIComponent(m.fullName)}`)}
                   >
-                    <MentorCard mentor={m} index={i} isFavorite={false} onToggleFavorite={() => {}} />
+                    <MentorCard mentor={m} index={i} />
                   </div>
                 ))}
               </div>
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
+
+      {/* Footer */}
+      <footer className={`w-full text-center py-6 text-sm font-medium ${darkMode ? 'bg-zinc-950 text-zinc-400' : 'bg-gray-100 text-gray-600'}`}>
+        Made with <span className="text-rose-500">❤️</span> by <span className="font-semibold text-pink-500">MentorX</span> © {new Date().getFullYear()}
+      </footer>
     </div>
   );
 };

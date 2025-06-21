@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaBars } from 'react-icons/fa';
+import Loader from '../components/Loader';
 
 const Dashboard = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const navigate = useNavigate();
+  const { logout, isAuthenticated, userName, loading } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const name = localStorage.getItem('userName');
-  const token = localStorage.getItem('token');
+  // ✅ Wait for userName to be non-empty string too
+  const showLoader = loading || (isAuthenticated && (!userName || userName.trim() === ''));
 
   useEffect(() => {
-    if (!token) navigate('/login');
-  }, [navigate, token]);
+    console.log('[Dashboard useEffect]', { loading, isAuthenticated, userName });
+    if (!loading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [loading, isAuthenticated, navigate]);
 
   const handleLogout = () => {
-    localStorage.clear();
-    navigate('/login');
+    logout();
+    navigate('/');
   };
 
   const menuItems = [
@@ -29,15 +35,20 @@ const Dashboard = () => {
     { label: 'Community', href: '/community', icon: <FaUsers className="inline-block mr-2" /> },
   ];
 
+  if (showLoader) {
+    return <Loader />;
+  }
+
+  if (!isAuthenticated) return null;
+
   return (
     <div className={`${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'} min-h-screen transition`}>
-      
       {/* Header */}
       <header className={`w-full px-4 sm:px-6 py-4 shadow ${darkMode ? 'bg-zinc-800' : 'bg-white'}`}>
         {/* Top Row for Mobile and Tablet */}
         <div className="flex justify-between items-center md:hidden">
           <h1 className="text-lg sm:text-xl font-bold tracking-wide">
-            Welcome, {name || 'User'}
+            Welcome, {userName}
           </h1>
           <div className="flex items-center gap-3">
             <button onClick={toggleDarkMode}>
@@ -57,10 +68,7 @@ const Dashboard = () => {
 
         {/* Desktop Header Layout */}
         <div className="hidden md:flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-wide">
-            Welcome, {name || 'User'}
-          </h1>
-
+          <h1 className="text-2xl font-bold tracking-wide">Welcome, {userName}</h1>
           <nav className="flex flex-wrap justify-center gap-8 text-sm sm:text-base font-semibold">
             {menuItems.map(({ label, href, icon }, i) => (
               <div
@@ -83,7 +91,6 @@ const Dashboard = () => {
               </div>
             ))}
           </nav>
-
           <div className="flex items-center gap-4">
             <button onClick={toggleDarkMode}>
               {darkMode ? <Sun size={20} /> : <Moon size={20} />}

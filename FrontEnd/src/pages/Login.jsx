@@ -6,10 +6,14 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '../context/ThemeContext';
+import { useFavorites } from '../context/FavouritesContext';
+import { useAuth } from '../context/AuthContext'; // ✅ import AuthContext
 import axios from '../utils/axios';
 
 const Login = () => {
   const { darkMode, toggleDarkMode } = useTheme();
+  const { fetchFavorites } = useFavorites();
+  const { login } = useAuth(); // ✅ get login method
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -26,17 +30,22 @@ const Login = () => {
         password,
       });
 
+      // ✅ Use AuthContext login() to save token & update auth state
+      login(res.data.token);
+
+      // Save extra info if needed
+      localStorage.setItem('userName', res.data.user.name);
+      localStorage.setItem('userEmail', res.data.user.email);
+
+      await fetchFavorites(); // fetch favorites after login
+
       toast.success(res.data.message || '✅ Login successful!', {
         position: 'top-center',
         autoClose: 3000,
         theme: darkMode ? 'dark' : 'light',
       });
 
-      localStorage.setItem('token', res.data.token);
-      localStorage.setItem('userName', res.data.user.name);
-      localStorage.setItem('userEmail', res.data.user.email);
-
-      setTimeout(() => navigate('/dashboard'), 1500);
+      setTimeout(() => navigate('/'), 1500);
     } catch (err) {
       const msg = err.response?.data?.message || '❌ Login failed';
       setErrorMsg(msg);
@@ -55,7 +64,6 @@ const Login = () => {
   return (
     <div className={`${darkMode ? "bg-zinc-900 text-white" : "bg-white text-zinc-900"} min-h-screen overflow-hidden transition`}>
       <ToastContainer />
-
       {/* Header */}
       <div className={`flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-4 shadow ${darkMode ? "bg-zinc-800" : "bg-white"}`}>
         <div className="pt-2 flex-1 text-center sm:text-left">
@@ -118,7 +126,6 @@ const Login = () => {
           >
             <h3 className="text-xl sm:text-2xl font-semibold mb-6 text-center">Login to MentorX</h3>
             <form onSubmit={handleLogin}>
-              {/* Email Input */}
               <label className="block text-sm mb-2">Email</label>
               <div className="relative mb-4 group">
                 <FaUser className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 transition-all" />
@@ -138,7 +145,6 @@ const Login = () => {
                 />
               </div>
 
-              {/* Password */}
               <label className="block text-sm mb-2">Password</label>
               <div className="relative mb-6 group">
                 <FaLock className="absolute left-3 top-3 text-gray-400 group-hover:text-indigo-500 transition-all" />
@@ -158,7 +164,6 @@ const Login = () => {
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading}
@@ -168,12 +173,10 @@ const Login = () => {
               </button>
             </form>
 
-            {/* Error Message */}
             {errorMsg && (
               <p className="text-red-500 text-sm mt-4 text-center">{errorMsg}</p>
             )}
 
-            {/* Signup Link */}
             <p className="text-sm sm:text-md mt-6 text-center">
               Don’t have an account?{' '}
               <span

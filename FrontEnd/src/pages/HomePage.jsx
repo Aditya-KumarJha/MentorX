@@ -82,7 +82,7 @@ const HomePage = () => {
             transition={{ delay: 0.6, duration: 0.6 }}
             className="flex justify-center gap-4 mt-6"
           >
-            <button onClick={() => navigate("/signup")} className="px-6 py-2 font-semibold rounded-full bg-indigo-500 hover:bg-indigo-600 text-white shadow-md transition-all">
+            <button onClick={() => navigate("/dashboard")} className="px-6 py-2 font-semibold rounded-full bg-indigo-500 hover:bg-indigo-600 text-white shadow-md transition-all">
               Get Started
             </button>
             <button
