@@ -1,21 +1,16 @@
 @import "tailwindcss";
 @import 'remixicon/fonts/remixicon.css';
 
-@layer utilities {
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradientShift 5s ease infinite;
-  }
-
-  @keyframes gradientShift {
+@keyframes scroll-left {
     0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
+      transform: translateX(0%);
     }
     100% {
-      background-position: 0% 50%;
+      transform: translateX(-50%);
     }
   }
-}
+  
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+  

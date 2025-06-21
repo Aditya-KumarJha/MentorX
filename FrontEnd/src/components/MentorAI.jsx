@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
 import { FaSearch, FaUserGraduate } from 'react-icons/fa';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import Loader from '../components/Loader';
@@ -14,6 +14,7 @@ const careerOptions = ['All', 'Machine Learning', 'Data Science', 'Blockchain', 
 const MentorAI = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [careerFilter, setCareerFilter] = useState(searchParams.get('career') || 'All');
   const [itemsToShow, setItemsToShow] = useState(12);
@@ -75,22 +76,37 @@ const MentorAI = () => {
         className="w-full lg:w-1/2 p-6 h-[45vh] md:h-screen overflow-hidden border-b md:border-b-0 md:border-r"
         style={{ borderColor: darkMode ? '#3f3f46' : '#e5e7eb' }}
       >
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-3xl font-bold flex items-center gap-2">
+        <div className="flex justify-start items-center mb-4 gap-4">
+          {/* Back Arrow → Link to Homepage */}
+          <Link
+            to="/"
+            className="text-3xl hover:scale-110 transition-transform"
+            aria-label="Go back"
+            style={{ color: darkMode ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.7)' }}
+          >
+            <i className="ri-arrow-left-line" />
+          </Link>
+
+          {/* Heading and icon shifted left */}
+          <h2 className="text-3xl font-bold flex items-center gap-2 select-none">
             <i className="ri-robot-2-line text-3xl animate-bounce" />
             <span className="bg-gradient-to-r from-cyan-400 to-rose-500 bg-clip-text text-transparent">
               MentorAI
             </span>
           </h2>
-          <button onClick={toggleDarkMode} className="text-2xl hover:scale-110 transition-transform">
+
+          {/* Theme toggle button */}
+          <button onClick={toggleDarkMode} className="ml-auto text-2xl hover:scale-110 transition-transform">
             <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
           </button>
         </div>
-        <div className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
-          darkMode
-            ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
-            : 'bg-gray-100 border border-gray-300 text-gray-500'
-        }`}>
+        <div
+          className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
+            darkMode
+              ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
+              : 'bg-gray-100 border border-gray-300 text-gray-500'
+          }`}
+        >
           (AI chat feature coming soon)
         </div>
       </motion.div>
