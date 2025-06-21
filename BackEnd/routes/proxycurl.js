@@ -1,16 +1,18 @@
-// /routes/proxycurl.js
 import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import Mentor from '../models/MentorModel.js'; // Mongoose model
+import Mentor from '../models/MentorModel.js';
+import cloudinary from 'cloudinary';
 
 dotenv.config();
 const router = express.Router();
 
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// ===============================
-// 🔎 CLASSIFIER FUNCTION
-// ===============================
 function classifyMentor(mentor) {
   const combinedText = `
     ${mentor.headline || ''}
@@ -21,12 +23,12 @@ function classifyMentor(mentor) {
   `.toLowerCase();
 
   const tags = [];
-  const stack = []; 
+  const stack = [];
 
   const keywordMap = {
     'Machine Learning': [
       'machine learning', 'ml engineer', 'ml scientist', 'deep learning',
-      'artificial intelligence', 'ai engineer', 'neural network', 'computer vision'
+      'artificial intelligence', 'ai', 'ai engineer', 'neural network', 'computer vision'
     ],
     'Data Science': [
       'data science', 'data scientist', 'data analyst', 'data engineer',
@@ -75,7 +77,6 @@ function classifyMentor(mentor) {
     'java', 'c++', 'c#', 'bash', 'linux', 'redis', 'graphql'
   ];
 
-
   for (const [tag, keywords] of Object.entries(keywordMap)) {
     if (keywords.some(keyword => combinedText.includes(keyword))) {
       tags.push(tag);
@@ -88,7 +89,6 @@ function classifyMentor(mentor) {
     }
   }
 
-  // Seniority
   let seniority = null;
   if (combinedText.includes('intern')) seniority = 'Intern';
   else if (combinedText.includes('junior')) seniority = 'Junior';
@@ -105,10 +105,6 @@ function classifyMentor(mentor) {
   };
 }
 
-
-// ===============================
-// 📥 FETCH + SAVE MENTOR
-// ===============================
 router.get('/fetch-mentor', async (req, res) => {
   const linkedInUrl = req.query.url;
 
@@ -125,9 +121,24 @@ router.get('/fetch-mentor', async (req, res) => {
     const mentor = response.data;
     const { expertiseTags, seniorityLevel, techStack } = classifyMentor(mentor);
 
+    let profilePic = mentor.profile_pic_url;
+
+    if (profilePic) {
+      try {
+        const upload = await cloudinary.v2.uploader.upload(profilePic, {
+          folder: 'mentorx/mentors',
+          public_id: mentor.full_name?.toLowerCase().replace(/\s+/g, '-'),
+          overwrite: true,
+        });
+        profilePic = upload.secure_url;
+      } catch (uploadErr) {
+        console.warn('Cloudinary upload failed, using original URL.');
+      }
+    }
+
     const mentorObj = {
       fullName: mentor.full_name,
-      profilePic: mentor.profile_pic_url,
+      profilePic: profilePic || null,
       headline: mentor.headline,
       occupation: mentor.occupation,
       location: {
@@ -136,14 +147,12 @@ router.get('/fetch-mentor', async (req, res) => {
         country: mentor.country_full_name,
       },
       summary: mentor.summary,
-
       socialLinks: {
         linkedin: `https://www.linkedin.com/in/${mentor.public_identifier}`,
         twitter: null,
         facebook: null,
         instagram: null,
       },
-
       education: mentor.education?.map(e => ({
         school: e.school,
         degree: e.degree_name,
@@ -151,7 +160,6 @@ router.get('/fetch-mentor', async (req, res) => {
         startYear: e.starts_at?.year,
         endYear: e.ends_at?.year,
       })) || [],
-
       experiences: mentor.experiences?.map(e => ({
         title: e.title,
         company: e.company,
@@ -159,41 +167,33 @@ router.get('/fetch-mentor', async (req, res) => {
         startYear: e.starts_at?.year,
         endYear: e.ends_at?.year,
       })) || [],
-
       certifications: mentor.certifications?.map(c => ({
         name: c.name,
         authority: c.authority,
       })) || [],
-
       awards: mentor.accomplishment_honors_awards?.map(a => ({
         title: a.title,
         issuer: a.issuer,
         year: a.issued_on?.year,
       })) || [],
-
       similarPeople: mentor.people_also_viewed?.map(p => ({
         name: p.name,
         link: p.link,
         summary: p.summary || null,
       })) || [],
-
       expertiseTags,
       seniorityLevel,
       techStack,
     };
 
-    // Store in MongoDB
     const exists = await Mentor.findOne({
       fullName: mentorObj.fullName,
       'socialLinks.linkedin': mentorObj.socialLinks.linkedin,
     });
 
-    let saved;
-    if (exists) {
-      saved = await Mentor.findByIdAndUpdate(exists._id, mentorObj, { new: true });
-    } else {
-      saved = await Mentor.create(mentorObj);
-    }
+    const saved = exists
+      ? await Mentor.findByIdAndUpdate(exists._id, mentorObj, { new: true })
+      : await Mentor.create(mentorObj);
 
     res.status(200).json(saved);
 

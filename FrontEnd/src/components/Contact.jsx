@@ -54,7 +54,7 @@ const Contact = forwardRef((props, ref) => {
             <div className={`space-y-4 mt-30 text-lg ${contactText}`}>
               <div className="flex items-center gap-3">
                 <i className="ri-mail-line text-xl text-indigo-500" />
-                <span>aj12102003@gmail.com</span>
+                <span>mentorxcontact@gmail.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <i className="ri-phone-line text-xl text-green-500" />
@@ -79,7 +79,7 @@ const Contact = forwardRef((props, ref) => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, amount: 0.3 }}
         >
-          <input type="hidden" name="access_key" value="41660b43-a85b-49b6-ab3f-446a37ed93f5" />
+          <input type="hidden" name="access_key" value="af143114-594f-4d0f-83d9-a70c67e72d7a" />
           <input type="hidden" name="from_name" value="MentorX Contact Form" />
           <input type="hidden" name="subject" value="New Contact Message from MentorX" />
 

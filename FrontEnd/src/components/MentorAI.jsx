@@ -2,10 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
 import { FaSearch, FaUserGraduate } from 'react-icons/fa';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import MentorCard from './partials/MentorCard';
 import 'remixicon/fonts/remixicon.css';
 
 const careerOptions = ['All', 'Machine Learning', 'Data Science', 'Blockchain', 'Full Stack', 'Cybersecurity', 'App Development'];
@@ -19,7 +20,6 @@ const MentorAI = () => {
   const [mentors, setMentors] = useState([]);
   const [displayedMentors, setDisplayedMentors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState([]);
 
   const shuffleArray = (arr) => [...arr].sort(() => 0.5 - Math.random());
 
@@ -64,33 +64,21 @@ const MentorAI = () => {
     setTimeout(() => setItemsToShow((prev) => prev + 9), 500);
   };
 
-  const handleImageError = (e) => {
-    e.target.src = '/noimage.jpg';
-  };
-
-  const toggleFavorite = (id) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
-    );
-  };
-
   if (loading) return <Loader />;
 
   return (
-    <div className={`min-h-screen flex flex-col md:flex-row ${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'}`}>
+    <div className={`min-h-screen flex flex-col lg:flex-row ${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'}`}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full md:w-1/2 p-6 h-[45vh] md:h-screen overflow-hidden border-b md:border-b-0 md:border-r"
+        className="w-full lg:w-1/2 p-6 h-[45vh] md:h-screen overflow-hidden border-b md:border-b-0 md:border-r"
         style={{ borderColor: darkMode ? '#3f3f46' : '#e5e7eb' }}
       >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-bold flex items-center gap-2">
-            <i className={`ri-robot-2-line text-3xl animate-bounce`} />
-            <span
-              className="bg-gradient-to-r from-cyan-400 to-rose-500 bg-clip-text text-transparent"
-            >
+            <i className="ri-robot-2-line text-3xl animate-bounce" />
+            <span className="bg-gradient-to-r from-cyan-400 to-rose-500 bg-clip-text text-transparent">
               MentorAI
             </span>
           </h2>
@@ -98,21 +86,16 @@ const MentorAI = () => {
             <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
           </button>
         </div>
-        <div
-          className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
-            darkMode
-              ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
-              : 'bg-gray-100 border border-gray-300 text-gray-500'
-          }`}
-        >
+        <div className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
+          darkMode
+            ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
+            : 'bg-gray-100 border border-gray-300 text-gray-500'
+        }`}>
           (AI chat feature coming soon)
         </div>
       </motion.div>
 
-      <div
-        id="mentor-scrollable-div"
-        className="w-full md:w-1/2 h-[55vh] md:h-screen overflow-y-auto px-6 py-6"
-      >
+      <div id="mentor-scrollable-div" className="w-full lg:w-1/2 h-[55vh] md:h-screen overflow-y-auto px-6 py-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -166,51 +149,12 @@ const MentorAI = () => {
           loader={<p className="text-center text-gray-400 mt-4">Loading more mentors...</p>}
           scrollableTarget="mentor-scrollable-div"
         >
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-6 gap-y-8">
             {displayedMentors.length === 0 ? (
               <p className="text-center text-gray-400 w-full">No mentors found.</p>
             ) : (
               displayedMentors.map((mentor, i) => (
-                <motion.div
-                  key={mentor._id || i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  whileHover={{
-                    scale: 1.05,
-                    boxShadow: darkMode
-                      ? '0 4px 30px rgba(255,255,255,0.05)'
-                      : '0 4px 30px rgba(0,0,0,0.08)',
-                  }}
-                  transition={{ duration: 0.3, delay: i * 0.02 }}
-                  className={`relative rounded-xl overflow-hidden border shadow-lg ${
-                    darkMode ? 'bg-zinc-800 border-zinc-700' : 'bg-white border-zinc-200'
-                  } transition-all duration-300`}
-                >
-                  <button
-                    onClick={() => toggleFavorite(mentor._id || i)}
-                    className="absolute top-2 right-2 text-xl z-10"
-                  >
-                    <i
-                      className={`ri-heart-${favorites.includes(mentor._id || i) ? 'fill text-rose-500' : 'line text-gray-400'} transition`}
-                    />
-                  </button>
-
-                  <Link to={`/mentor/${encodeURIComponent(mentor.fullName)}`}>
-                    <img
-                      src={mentor.profilePic || '/noimage.jpg'}
-                      onError={handleImageError}
-                      alt={mentor.fullName}
-                      className="h-[25vh] w-full object-cover"
-                    />
-                    <div className="p-2">
-                      <h3 className="text-[0.9rem] font-semibold truncate">{mentor.fullName}</h3>
-                      <p className="text-[0.75rem] text-gray-400 truncate">{mentor.headline}</p>
-                      <p className="text-[0.65rem] text-gray-300 mt-1 truncate">
-                        {mentor.expertiseTags?.join(', ')}
-                      </p>
-                    </div>
-                  </Link>
-                </motion.div>
+                <MentorCard key={mentor._id || i} mentor={mentor} index={i} />
               ))
             )}
           </div>
