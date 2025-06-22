@@ -1,16 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaChalkboardTeacher } from 'react-icons/fa';
+import { FaChalkboardTeacher, FaBookmark, FaRegBookmark } from 'react-icons/fa';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext'; // ✅ import AuthContext
 
 const CourseCard = ({ course, index, darkMode }) => {
-  if (!course || !course.title) return null;
+  const { user, setUser } = useAuth(); // ✅ get user from AuthContext
+  const [bookmarked, setBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (!user) return setBookmarked(false);
+    const bookmarkedList = user?.bookmarkedCourses || [];
+    setBookmarked(bookmarkedList.includes(course._id));
+  }, [user, course._id]);
+
+  const handleBookmarkToggle = async () => {
+    if (!user?.token) {
+      toast.info('🔐 Login to bookmark this course', { position: 'top-right' });
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        `http://localhost:5050/api/bookmarks/${course._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      if (res.data.success) {
+        setBookmarked(res.data.bookmarked);
+
+        // ✅ Update localStorage to reflect new bookmarks
+        const updatedUser = {
+          ...user,
+          bookmarkedCourses: res.data.updatedBookmarkedCourses || [],
+        };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        setUser(updatedUser);
+
+        if (res.data.bookmarked) {
+          toast.success('✅ Bookmarked successfully', { position: 'top-right' });
+        } else {
+          toast.error('❌ Removed from bookmarks', { position: 'top-right' });
+        }
+      }
+    } catch (err) {
+      console.error('Bookmark error:', err);
+      toast.error('Failed to update bookmark', { position: 'top-right' });
+    }
+  };
 
   const getBestImage = (images = []) => {
-    for (let i = 0; i < 7; i++) {
-      if (images[6]) return images[6];
-    }
-    return 'https://via.placeholder.com/750x422?text=No+Image';
+    return images?.[6] || 'https://via.placeholder.com/750x422?text=No+Image';
   };
+
+  if (!course || !course.title) return null;
 
   const courseImage = getBestImage(course.images);
   const instructor = course.instructors?.[0]?.display_name || 'Unknown Instructor';
@@ -30,13 +79,21 @@ const CourseCard = ({ course, index, darkMode }) => {
           : '0 12px 25px rgba(0,0,0,0.25)',
       }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
-      className={`rounded-2xl border transition-all duration-300 will-change-transform ${
+      className={`relative rounded-2xl border transition-all duration-300 will-change-transform ${
         darkMode
           ? 'bg-zinc-800 text-white border-zinc-700 shadow-[0_8px_20px_rgba(255,255,255,0.1)]'
           : 'bg-white text-black border-zinc-200 shadow-[0_8px_20px_rgba(0,0,0,0.1)]'
       } m-2 ${index < 4 ? 'mt-6' : ''}`}
-      style={{ transformOrigin: 'center', overflow: 'visible' }}
     >
+      {/* Bookmark Icon */}
+      <button
+        onClick={handleBookmarkToggle}
+        className="absolute top-3 right-3 text-xl text-yellow-400 hover:scale-110 transition"
+        title={bookmarked ? 'Remove Bookmark' : 'Add to Bookmarks'}
+      >
+        {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
+      </button>
+
       <img
         src={courseImage}
         alt={course.title}

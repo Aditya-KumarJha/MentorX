@@ -9,9 +9,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loader from '../components/Loader';
 import { motion } from 'framer-motion';
 import { debounce } from 'lodash';
+import { useAuth } from '../context/AuthContext';
 
 const EduMatrix = () => {
   const { darkMode, toggleDarkMode } = useTheme();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [courses, setCourses] = useState([]);
@@ -221,6 +223,7 @@ const EduMatrix = () => {
                 course={course}
                 index={index}
                 darkMode={darkMode}
+                user={user}
               />
             ))}
           </motion.div>

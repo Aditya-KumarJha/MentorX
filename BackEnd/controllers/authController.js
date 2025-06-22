@@ -54,13 +54,15 @@ export const loginUser = async (req, res) => {
       expiresIn: '2d',
     });
 
+    // ✅ Include bookmarkedCourses in user response
     res.status(200).json({
       message: '✅ Login successful',
       token,
       user: {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        bookmarkedCourses: user.bookmarkedCourses || [] // ✅ add this
       }
     });
   } catch (error) {
@@ -68,3 +70,4 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server error ❌' });
   }
 };
+

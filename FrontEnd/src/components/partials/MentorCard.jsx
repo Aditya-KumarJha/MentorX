@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useFavorites } from '../../context/FavouritesContext';
+import { useAuth } from '../../context/AuthContext'; // ✅ get auth globally
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'remixicon/fonts/remixicon.css';
@@ -10,10 +11,10 @@ import 'remixicon/fonts/remixicon.css';
 const MentorCard = ({ mentor, index }) => {
   const { darkMode } = useTheme();
   const { favoriteIds, toggleFavorite } = useFavorites();
+  const { user, isAuthenticated } = useAuth(); // ✅ use AuthContext
   const [imgSrc, setImgSrc] = useState(mentor.profilePic || '/noimage.jpg');
   const [localFavorite, setLocalFavorite] = useState(false);
 
-  // Safely check if mentor is in favorites
   useEffect(() => {
     if (Array.isArray(favoriteIds)) {
       setLocalFavorite(favoriteIds.includes(mentor._id));
@@ -24,8 +25,14 @@ const MentorCard = ({ mentor, index }) => {
     e.preventDefault();
     e.stopPropagation();
 
-    const token = localStorage.getItem('token');
-    if (!token) return;
+    if (!isAuthenticated || !user?.token) {
+      toast.info('🔐 Login to add favorites', {
+        position: 'top-right',
+        autoClose: 2500,
+        theme: darkMode ? 'dark' : 'light',
+      });
+      return;
+    }
 
     try {
       const msg = await toggleFavorite(mentor._id);

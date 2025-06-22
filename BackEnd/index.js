@@ -8,7 +8,8 @@ import authRoutes from './routes/authRoutes.js';
 import proxycurlRouter from './routes/proxycurl.js';
 import mentorRoutes from './routes/mentorRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import courseRoutes from './routes/courseRoutes.js'; // ✅ Course API route
+import courseRoutes from './routes/courseRoutes.js'; 
+import bookmarkRoutes from './routes/bookmarkRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -28,7 +29,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/mentors', mentorRoutes);
 app.use('/api/proxycurl', proxycurlRouter);
 app.use('/api/users', userRoutes);
-app.use('/api/courses', courseRoutes); // ✅ Now serving courses
+app.use('/api/courses', courseRoutes); 
+app.use('/api/bookmarks', bookmarkRoutes);
 
 // Health Check
 app.get('/', (req, res) => {

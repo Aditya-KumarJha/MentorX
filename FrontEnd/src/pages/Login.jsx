@@ -31,9 +31,15 @@ const Login = () => {
       });
 
       // ✅ Use AuthContext login() to save token & update auth state
-      login(res.data.token);
+      login(res.data.token, res.data.user); 
 
-      // Save extra info if needed
+      // ✅ Save full user with token in localStorage
+      localStorage.setItem('user', JSON.stringify({
+        ...res.data.user,
+        token: res.data.token,
+        bookmarkedCourses: res.data.user.bookmarkedCourses || [],
+      }));
+
       localStorage.setItem('userName', res.data.user.name);
       localStorage.setItem('userEmail', res.data.user.email);
 
