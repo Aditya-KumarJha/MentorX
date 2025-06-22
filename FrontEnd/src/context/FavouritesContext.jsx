@@ -4,10 +4,12 @@ import { useFavoritesLogic } from '../hooks/useFavorites';
 const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
-  const { favoriteIds, toggleFavorite, fetchFavorites } = useFavoritesLogic();
+  const { favoriteIds, favoriteMentors, toggleFavorite, fetchFavorites } = useFavoritesLogic();
 
   return (
-    <FavoritesContext.Provider value={{ favoriteIds, toggleFavorite, fetchFavorites }}>
+    <FavoritesContext.Provider
+      value={{ favoriteIds, favoriteMentors, toggleFavorite, fetchFavorites }}
+    >
       {children}
     </FavoritesContext.Provider>
   );
@@ -18,5 +20,6 @@ export const useFavorites = () => {
   if (!context) {
     throw new Error('useFavorites must be used within a FavoritesProvider');
   }
+
   return context;
 };

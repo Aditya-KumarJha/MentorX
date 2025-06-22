@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { FaChalkboardTeacher, FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../context/AuthContext'; // ✅ import AuthContext
+import { useAuth } from '../../context/AuthContext';
 
-const CourseCard = ({ course, index, darkMode }) => {
-  const { user, setUser } = useAuth(); // ✅ get user from AuthContext
+const CourseCard = ({ course, index, darkMode, setBookmarkedCourses, isDashboard = false }) => {
+  const { user, setUser } = useAuth();
   const [bookmarked, setBookmarked] = useState(false);
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const CourseCard = ({ course, index, darkMode }) => {
       if (res.data.success) {
         setBookmarked(res.data.bookmarked);
 
-        // ✅ Update localStorage to reflect new bookmarks
         const updatedUser = {
           ...user,
           bookmarkedCourses: res.data.updatedBookmarkedCourses || [],
@@ -43,11 +42,20 @@ const CourseCard = ({ course, index, darkMode }) => {
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
 
-        if (res.data.bookmarked) {
-          toast.success('✅ Bookmarked successfully', { position: 'top-right' });
-        } else {
-          toast.error('❌ Removed from bookmarks', { position: 'top-right' });
+        if (setBookmarkedCourses) {
+          if (!res.data.bookmarked) {
+            setBookmarkedCourses((prev) =>
+              prev.filter((c) => c._id !== course._id)
+            );
+          } else if (res.data.bookmarkedCourse) {
+            setBookmarkedCourses((prev) => [...prev, res.data.bookmarkedCourse]);
+          }
         }
+
+        toast[res.data.bookmarked ? 'success' : 'error'](
+          res.data.bookmarked ? '✅ Bookmarked successfully' : '❌ Removed from bookmarks',
+          { position: 'top-right' }
+        );
       }
     } catch (err) {
       console.error('Bookmark error:', err);
@@ -55,9 +63,8 @@ const CourseCard = ({ course, index, darkMode }) => {
     }
   };
 
-  const getBestImage = (images = []) => {
-    return images?.[6] || 'https://via.placeholder.com/750x422?text=No+Image';
-  };
+  const getBestImage = (images = []) =>
+    images?.[6] || 'https://via.placeholder.com/750x422?text=No+Image';
 
   if (!course || !course.title) return null;
 
@@ -79,11 +86,11 @@ const CourseCard = ({ course, index, darkMode }) => {
           : '0 12px 25px rgba(0,0,0,0.25)',
       }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
-      className={`relative rounded-2xl border transition-all duration-300 will-change-transform ${
+      className={`relative rounded-2xl border transition-all duration-300 ${
         darkMode
-          ? 'bg-zinc-800 text-white border-zinc-700 shadow-[0_8px_20px_rgba(255,255,255,0.1)]'
-          : 'bg-white text-black border-zinc-200 shadow-[0_8px_20px_rgba(0,0,0,0.1)]'
-      } m-2 ${index < 4 ? 'mt-6' : ''}`}
+          ? 'bg-zinc-800 text-white border-zinc-700'
+          : 'bg-white text-black border-zinc-200'
+      } m-2 ${!isDashboard && index < 4 ? 'mt-6' : ''}`}
     >
       {/* Bookmark Icon */}
       <button

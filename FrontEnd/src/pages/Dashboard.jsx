@@ -1,27 +1,53 @@
+// All imports remain unchanged
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useFavorites } from '../context/FavouritesContext';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
 import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaBars } from 'react-icons/fa';
 import Loader from '../components/Loader';
+import MentorCard from '../components/partials/MentorCard';
+import CourseCard from '../components/partials/CourseCard';
 
 const Dashboard = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const navigate = useNavigate();
-  const { logout, isAuthenticated, userName, loading } = useAuth();
+  const { logout, isAuthenticated, userName, user, loading } = useAuth();
+  const { favoriteMentors = [], fetchFavorites } = useFavorites();
+  const [bookmarkedCourses, setBookmarkedCourses] = useState([]);
+  const [loadingCourses, setLoadingCourses] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ✅ Wait for userName to be non-empty string too
   const showLoader = loading || (isAuthenticated && (!userName || userName.trim() === ''));
 
   useEffect(() => {
-    console.log('[Dashboard useEffect]', { loading, isAuthenticated, userName });
-    if (!loading && !isAuthenticated) {
-      navigate('/login');
-    }
+    if (!loading && !isAuthenticated) navigate('/login');
   }, [loading, isAuthenticated, navigate]);
+
+  useEffect(() => {
+    const fetchBookmarkedCourses = async () => {
+      if (!user?.token) return;
+      try {
+        const res = await fetch('http://localhost:5050/api/users/bookmarks', {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const data = await res.json();
+        setBookmarkedCourses(data.bookmarkedCourses || []);
+      } catch (err) {
+        console.error('Failed to fetch bookmarked courses:', err);
+      } finally {
+        setLoadingCourses(false);
+      }
+    };
+
+    if (isAuthenticated) fetchBookmarkedCourses();
+  }, [user?.token, isAuthenticated]);
+
+  useEffect(() => {
+    if (isAuthenticated && user?.token) fetchFavorites();
+  }, [isAuthenticated, user?.token, fetchFavorites]);
 
   const handleLogout = () => {
     logout();
@@ -35,25 +61,37 @@ const Dashboard = () => {
     { label: 'Community', href: '/community', icon: <FaUsers className="inline-block mr-2" /> },
   ];
 
-  if (showLoader) {
-    return <Loader />;
-  }
-
+  if (showLoader) return <Loader />;
   if (!isAuthenticated) return null;
+
+  const loopStyle = {
+    display: 'flex',
+    gap: '24px',
+    width: 'max-content',
+  };
+
+  const cardWrapperStyle = {
+    width: '250px',
+    minHeight: '340px',
+    flexShrink: 0,
+  };
+
+  const headerTextStyle = `font-bold tracking-wide ${
+    darkMode ? 'text-blue-300' : 'text-indigo-600'
+  }`;
+
+  const sectionTitleStyle = `text-2xl font-bold mb-4 ${
+    darkMode ? 'text-pink-400' : 'text-rose-600'
+  }`;
 
   return (
     <div className={`${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'} min-h-screen transition`}>
       {/* Header */}
       <header className={`w-full px-4 sm:px-6 py-4 shadow ${darkMode ? 'bg-zinc-800' : 'bg-white'}`}>
-        {/* Top Row for Mobile and Tablet */}
         <div className="flex justify-between items-center md:hidden">
-          <h1 className="text-lg sm:text-xl font-bold tracking-wide">
-            Welcome, {userName}
-          </h1>
+          <h1 className={`text-lg sm:text-xl ${headerTextStyle}`}>Welcome, {userName}</h1>
           <div className="flex items-center gap-3">
-            <button onClick={toggleDarkMode}>
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+            <button onClick={toggleDarkMode}>{darkMode ? <Sun size={18} /> : <Moon size={18} />}</button>
             <button
               onClick={handleLogout}
               className="px-4 py-1.5 text-sm font-medium rounded-full border border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition"
@@ -66,9 +104,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Desktop Header Layout */}
         <div className="hidden md:flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-wide">Welcome, {userName}</h1>
+          <h1 className={`text-2xl ${headerTextStyle}`}>Welcome, {userName}</h1>
           <nav className="flex flex-wrap justify-center gap-8 text-sm sm:text-base font-semibold">
             {menuItems.map(({ label, href, icon }, i) => (
               <div
@@ -92,9 +129,7 @@ const Dashboard = () => {
             ))}
           </nav>
           <div className="flex items-center gap-4">
-            <button onClick={toggleDarkMode}>
-              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+            <button onClick={toggleDarkMode}>{darkMode ? <Sun size={20} /> : <Moon size={20} />}</button>
             <button
               onClick={handleLogout}
               className="px-6 py-2 font-semibold rounded-full border border-indigo-500 text-indigo-500 hover:bg-indigo-500 hover:text-white transition"
@@ -104,7 +139,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
         {isMobileMenuOpen && (
           <nav className="flex flex-col mt-4 md:hidden gap-3 text-sm font-semibold">
             {menuItems.map(({ label, href, icon }, i) => (
@@ -131,19 +165,84 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl sm:text-4xl font-extrabold mb-4"
+          className={`text-3xl sm:text-4xl font-extrabold mb-4 ${
+            darkMode ? 'text-cyan-400' : 'text-indigo-700'
+          }`}
         >
           MentorX Dashboard
         </motion.h2>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-base sm:text-lg opacity-80 max-w-xl mx-auto"
+          className="text-base sm:text-lg opacity-80 max-w-xl mx-auto mb-10"
         >
           Your personalized control panel for mentorship, AI tools, and growth insights.
         </motion.p>
+
+        {/* Favorite Mentors */}
+        <section className="mb-12 text-left">
+          <h3 className={sectionTitleStyle}>❤️ Your Favorite Mentors</h3>
+          {favoriteMentors.length > 0 ? (
+            <div className="scroll-container overflow-hidden whitespace-nowrap">
+              <div className="loop-scroll" style={loopStyle}>
+                {Array.from({ length: 2 }).flatMap((_, i) =>
+                  favoriteMentors.map((mentor, index) => (
+                    <div key={`${i}-${mentor._id}`} style={cardWrapperStyle}>
+                      <MentorCard mentor={mentor} index={index} />
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          ) : (
+            <p className="opacity-60 italic">You haven't added any favorite mentors yet.</p>
+          )}
+        </section>
+
+        {/* Bookmarked Courses */}
+        <section className="mb-12 text-left">
+          <h3 className={sectionTitleStyle}>🔖 Your Bookmarked Courses</h3>
+          {!loadingCourses && bookmarkedCourses.length > 0 ? (
+            <div className="scroll-container overflow-hidden whitespace-nowrap">
+              <div className="loop-scroll" style={loopStyle}>
+                {Array.from({ length: 2 }).flatMap((_, i) =>
+                  bookmarkedCourses.map((course, index) => (
+                    <div key={`${i}-${course._id}`} style={cardWrapperStyle}>
+                      <CourseCard
+                        course={course}
+                        index={index}
+                        darkMode={darkMode}
+                        setBookmarkedCourses={setBookmarkedCourses}
+                        isDashboard={true}
+                      />
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          ) : !loadingCourses ? (
+            <p className="opacity-60 italic">No courses bookmarked yet.</p>
+          ) : null}
+        </section>
       </main>
+
+      {/* Scroll Animation & Pause on Hover */}
+      <style>
+        {`
+          @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .scroll-container:hover .loop-scroll {
+            animation-play-state: paused;
+          }
+          .loop-scroll {
+            animation: scroll-left 40s linear infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };

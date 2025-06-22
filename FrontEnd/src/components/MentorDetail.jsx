@@ -50,6 +50,7 @@ const MentorDetail = () => {
 
   const handleToggleFavorite = async () => {
     if (!mentor) return;
+  
     const token = localStorage.getItem('token');
     if (!token) {
       toast.warn('⚠️ Please log in to favorite mentors', {
@@ -59,7 +60,7 @@ const MentorDetail = () => {
       });
       return;
     }
-
+  
     try {
       const res = await toggleFavorite(mentor._id);
       toast(res.includes('Removed') ? '❌ Removed from Favorites' : '❤️ Added to Favorites', {
@@ -69,14 +70,26 @@ const MentorDetail = () => {
         theme: darkMode ? 'dark' : 'light',
       });
     } catch (err) {
-      console.error('Favorite toggle error:', err);
-      toast.error('❌ Something went wrong', {
-        position: 'top-right',
-        autoClose: 2500,
-        theme: darkMode ? 'dark' : 'light',
-      });
+      if (
+        err?.response?.status === 401 ||
+        err?.message?.toLowerCase().includes('unauthorized')
+      ) {
+        toast.warn('⚠️ Please log in to favorite mentors', {
+          position: 'top-right',
+          autoClose: 2000,
+          theme: darkMode ? 'dark' : 'light',
+        });
+      } else {
+        console.error('Favorite toggle error:', err);
+        toast.error('❌ Something went wrong', {
+          position: 'top-right',
+          autoClose: 2500,
+          theme: darkMode ? 'dark' : 'light',
+        });
+      }
     }
   };
+  
 
   if (loading) return <Loader />;
   if (!mentor) return <p className="text-center text-gray-400 mt-10">Mentor not found.</p>;

@@ -59,3 +59,20 @@ export const getFavoriteMentors = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch favorites' });
   }
 };
+
+// ✅ Get bookmarked courses (NEW)
+export const getBookmarkedCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate('bookmarkedCourses');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      bookmarkedCourses: user.bookmarkedCourses,
+    });
+  } catch (err) {
+    console.error('❌ Error fetching bookmarked courses:', err);
+    res.status(500).json({ message: 'Failed to fetch bookmarked courses' });
+  }
+};

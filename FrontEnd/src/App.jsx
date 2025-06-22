@@ -13,27 +13,33 @@ import MentorAI from './components/MentorAI';
 import MentorDetail from './components/MentorDetail';
 import EduMatrix from './components/EduMatrix'; 
 
+import { FavoritesProvider } from './context/FavouritesContext';
+
 const App = () => {
   return (
     <div className="min-h-screen">
       <ToastContainer position="bottom-right" autoClose={3000} />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/mentor-ai" element={<MentorAI />} />
-        <Route path="/mentor/:name" element={<MentorDetail />} />
-        <Route path="/edumatrix" element={<EduMatrix />} /> 
+      
+      {/* ✅ Wrap your entire app with FavoritesProvider */}
+      <FavoritesProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/mentor-ai" element={<MentorAI />} />
+          <Route path="/mentor/:name" element={<MentorDetail />} />
+          <Route path="/edumatrix" element={<EduMatrix />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </FavoritesProvider>
     </div>
   );
 };

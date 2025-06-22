@@ -1,14 +1,15 @@
-// hooks/useFavorites.js
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // ✅ Use global auth
+import { useAuth } from '../context/AuthContext';
 
 export const useFavoritesLogic = () => {
-  const { user } = useAuth(); // ✅ Get user from AuthContext
+  const { user } = useAuth(); // ✅ Auth context
   const [favoriteIds, setFavoriteIds] = useState([]);
   const [favoriteMentors, setFavoriteMentors] = useState([]);
 
+  // ✅ Fetch favorite mentors from backend
   const fetchFavorites = useCallback(async () => {
+
     if (!user?.token) {
       setFavoriteIds([]);
       setFavoriteMentors([]);
@@ -23,19 +24,22 @@ export const useFavoritesLogic = () => {
       setFavoriteIds(res.data.favoriteIds || []);
       setFavoriteMentors(res.data.favoriteMentors || []);
     } catch (err) {
-      console.error('❌ Failed to fetch favorites:', err);
+      console.error('❌ [useFavorites] Failed to fetch favorites:', err);
       setFavoriteIds([]);
       setFavoriteMentors([]);
     }
   }, [user?.token]);
 
+  // ✅ Fetch favorites on mount or when token changes
   useEffect(() => {
     fetchFavorites();
   }, [fetchFavorites]);
 
+  // ✅ Toggle favorite mentor
   const toggleFavorite = async (mentorId) => {
     if (!user?.token) {
-      throw new Error('Unauthorized'); // ✅ Prevent silent toggle
+      console.error('⛔ Attempted to toggle favorite without token');
+      throw new Error('Unauthorized');
     }
 
     try {
@@ -50,14 +54,17 @@ export const useFavoritesLogic = () => {
         setFavoriteMentors((prev) => prev.filter((mentor) => mentor._id !== mentorId));
       } else {
         setFavoriteIds((prev) => [...prev, mentorId]);
+
         if (res.data.mentor) {
           setFavoriteMentors((prev) => [...prev, res.data.mentor]);
+        } else {
+          console.warn('⚠️ No mentor returned in response');
         }
       }
 
       return res.data.message;
     } catch (err) {
-      console.error('❌ Toggle favorite error:', err);
+      console.error('❌ [useFavorites] Error toggling favorite:', err);
       throw err;
     }
   };
