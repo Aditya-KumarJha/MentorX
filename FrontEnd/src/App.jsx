@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Dashboard from './pages/Dashboard'; 
+import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+
 import MentorAI from './components/MentorAI';
-import MentorDetail from './components/MentorDetail'; // ✅ import the detail page
+import MentorDetail from './components/MentorDetail';
+import EduMatrix from './components/EduMatrix'; 
 
 const App = () => {
   return (
@@ -20,7 +22,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mentor-ai" element={<MentorAI />} />
-        <Route path="/mentor/:name" element={<MentorDetail />} /> {/* ✅ added */}
+        <Route path="/mentor/:name" element={<MentorDetail />} />
+        <Route path="/edumatrix" element={<EduMatrix />} /> 
 
         <Route
           path="/dashboard"
