@@ -13,18 +13,23 @@ export const protect = async (req, res, next) => {
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id)
+      const user = await User.findById(decoded.id)
         .select('-password')
-        .populate('bookmarkedCourses'); // ✅ Populate courses
+        .populate('bookmarkedCourses'); // Keep this
+
+      if (!user) {
+        return res.status(401).json({ message: 'Not authorized, user not found' });
+      }
+
+      // ✅ Assign full user object so req.user.name is accessible
+      req.user = user;
 
       next();
     } catch (error) {
       console.error('Auth error:', error);
-      res.status(401).json({ message: 'Not authorized, token failed' });
+      return res.status(401).json({ message: 'Not authorized, token failed' });
     }
-  }
-
-  if (!token) {
+  } else {
     return res.status(401).json({ message: 'Not authorized, no token' });
   }
 };

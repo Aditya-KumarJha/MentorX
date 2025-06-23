@@ -14,11 +14,12 @@ import MentorDetail from './components/MentorDetail';
 import EduMatrix from './components/EduMatrix'; 
 
 import { FavoritesProvider } from './context/FavouritesContext';
+import Community from './pages/Community';
 
 const App = () => {
   return (
     <div className="min-h-screen">
-      <ToastContainer position="bottom-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} />
       
       {/* ✅ Wrap your entire app with FavoritesProvider */}
       <FavoritesProvider>
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/mentor-ai" element={<MentorAI />} />
           <Route path="/mentor/:name" element={<MentorDetail />} />
           <Route path="/edumatrix" element={<EduMatrix />} />
+          <Route path="/community" element={<Community />} />
 
           <Route
             path="/dashboard"

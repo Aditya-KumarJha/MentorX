@@ -1,4 +1,3 @@
-// All imports remain unchanged
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
@@ -10,6 +9,7 @@ import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaBars } from 'react-icons
 import Loader from '../components/Loader';
 import MentorCard from '../components/partials/MentorCard';
 import CourseCard from '../components/partials/CourseCard';
+import PostCard from '../components/PostCard';
 
 const Dashboard = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -18,9 +18,19 @@ const Dashboard = () => {
   const { favoriteMentors = [], fetchFavorites } = useFavorites();
   const [bookmarkedCourses, setBookmarkedCourses] = useState([]);
   const [loadingCourses, setLoadingCourses] = useState(true);
+  const [likedPosts, setLikedPosts] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const showLoader = loading || (isAuthenticated && (!userName || userName.trim() === ''));
+
+  const handlePostDelete = (deletedPostId) => {
+    setLikedPosts(prev => prev.filter(post => post._id !== deletedPostId));
+  };
+
+  const handlePostUnlike = (deletedPostId) => {
+    setLikedPosts(prev => prev.filter(post => post._id !== deletedPostId));
+  };
 
   useEffect(() => {
     if (!loading && !isAuthenticated) navigate('/login');
@@ -46,7 +56,25 @@ const Dashboard = () => {
   }, [user?.token, isAuthenticated]);
 
   useEffect(() => {
-    if (isAuthenticated && user?.token) fetchFavorites();
+    const fetchLikedPosts = async () => {
+      if (!user?.token) return;
+      try {
+        const res = await fetch('http://localhost:5050/api/users/likes', {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const data = await res.json();
+        setLikedPosts(data.likedPosts || []);
+      } catch (err) {
+        console.error('Failed to fetch liked posts:', err);
+      } finally {
+        setLoadingPosts(false);
+      }
+    };
+
+    if (isAuthenticated && user?.token) {
+      fetchFavorites();
+      fetchLikedPosts();
+    }
   }, [isAuthenticated, user?.token, fetchFavorites]);
 
   const handleLogout = () => {
@@ -71,7 +99,7 @@ const Dashboard = () => {
   };
 
   const cardWrapperStyle = {
-    width: '250px',
+    width: '300px',
     minHeight: '340px',
     flexShrink: 0,
   };
@@ -158,7 +186,6 @@ const Dashboard = () => {
           </nav>
         )}
       </header>
-
       {/* Main Content */}
       <main className="p-6 sm:p-10 text-center">
         <motion.h2
@@ -226,9 +253,36 @@ const Dashboard = () => {
             <p className="opacity-60 italic">No courses bookmarked yet.</p>
           ) : null}
         </section>
+
+        {/* Liked Posts */}
+        <section className="mb-12 text-left">
+          <h3 className={sectionTitleStyle}>✍️ Posts You've Liked</h3>
+          {!loadingPosts && likedPosts.length > 0 ? (
+            <div className="mt-2 pt-6 scroll-container overflow-hidden whitespace-nowrap" >
+              <div className="loop-scroll" style={loopStyle}>
+                {Array.from({ length: 2 }).flatMap((_, i) =>
+                  likedPosts.map((post, index) => (
+                    <div key={`${i}-${post._id}`} style={cardWrapperStyle}>
+                      <PostCard
+                        key={post._id}
+                        post={post}
+                        darkMode={darkMode}
+                        fetchPosts={() => {}}
+                        index={index}
+                        onUnlike={handlePostUnlike}
+                        onDelete={handlePostDelete}
+                      />
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+            ) : !loadingPosts ? (
+          <p className="opacity-60 italic">You haven't liked any posts yet.</p>
+          ) : null}
+        </section>
       </main>
 
-      {/* Scroll Animation & Pause on Hover */}
       <style>
         {`
           @keyframes scroll-left {

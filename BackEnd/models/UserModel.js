@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
       }
+    ],
+    likedPosts: [ 
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+      }
     ]
   },
   { timestamps: true }
