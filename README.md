@@ -113,6 +113,8 @@ npm run dev
 
 Runs at http://localhost:5173
 
+### 2. Folder Structure
+```bash
 MentorX/
 │
 ├── BackEnd/                           // 🌐 Backend server (Node.js + Express)
@@ -135,37 +137,56 @@ MentorX/
 │   │   └── App.jsx                   // 🌐 Main app component with routing
 │
 └── README.md                         // 📘 Project documentation
+```
 
-🔄 API Routes
+### 4🔄 API Routes
+
 🧠 AI Routes
-bash
-Copy
-Edit
+```bash
 GET /api/ai/mentor
+```
+```bash
 GET /api/ai/pathfinder
+```
+
 👥 User Routes
-bash
-Copy
-Edit
+```bash
 POST /api/auth/login
+```
+```bash
 POST /api/auth/register
+```
+```bash
 GET  /api/users/favorites
+```
+```bash
 GET  /api/users/bookmarks
+```
+```bash
 GET  /api/users/likes
+```
+
 📚 Course Routes
-bash
-Copy
-Edit
+```bash
 GET /api/courses
+```
+```bash
 PATCH /api/courses/:id/bookmark
+```
+
 📝 Post Routes
-bash
-Copy
-Edit
+```bash
 GET    /api/posts
+```
+```bash
 POST   /api/posts
+```
+```bash
 PATCH  /api/posts/:id/like
+```
+```bash
 DELETE /api/posts/:id
+```
 
 🧠 Learning Goals
 Learn modern MERN stack development
@@ -181,7 +202,7 @@ Enhance UI/UX with Tailwind + Dark Mode
 🤝 Contributing
 Pull requests are welcome!
 To contribute:
-
+```bash
 Fork the repo
 
 Create a new branch: git checkout -b feature-name
@@ -189,6 +210,7 @@ Create a new branch: git checkout -b feature-name
 Commit your changes
 
 Push and open a pull request
+```
 
 📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
