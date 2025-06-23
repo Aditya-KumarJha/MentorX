@@ -66,50 +66,50 @@ MentorX is an all-in-one AI-powered mentorship platform designed to help users n
 
 ### 1. Clone the Repo
 
-```bash
+    ```bash
     git clone https://github.com/your-username/MentorX.git
-```
-```bash
+    ```
+    ```bash
     cd MentorX
-```
+    ```
 
 ### 2. Backend Setup
 
-```bash
+    ```bash
     cd BackEnd
-```
-```bash
+    ```
+    ```bash
     npm install
-```
+    ```
 
 ➕ Add Environment Variables
 Create a .env file in the BackEnd/ folder:
 
-```bash
+    ```bash
     PORT=5050
     MONGODB_URI=your_mongodb_connection_string
     JWT_SECRET=your_jwt_secret
     PROXYCURL_API_KEY=your_proxycurl_key
-```
+    ```
 
 Then start the backend:
-```bash
+    ```bash
     npm run dev
-```
+    ```
 
 Runs at http://localhost:5050
 
 ### 2. Frontend Setup
 
-```bash
+    ```bash
     cd ../FrontEnd
-```
-```bash
+    ```
+    ```bash
     npm install
-```
-```bash
+    ```
+    ```bash
     npm run dev
-```
+    ```
 
 Runs at http://localhost:5173
 
