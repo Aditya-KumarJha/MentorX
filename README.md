@@ -99,7 +99,7 @@ npm run dev
 
 Runs at http://localhost:5050
 
-### 2. Frontend Setup
+### 3. Frontend Setup
 
 ```bash
 cd ../FrontEnd
@@ -113,7 +113,7 @@ npm run dev
 
 Runs at http://localhost:5173
 
-### 2. Folder Structure
+### 4. Folder Structure
 ```bash
 MentorX/
 │
@@ -139,7 +139,7 @@ MentorX/
 └── README.md                         // 📘 Project documentation
 ```
 
-### 4🔄 API Routes
+### 5🔄 API Routes
 
 🧠 AI Routes
 ```bash
@@ -188,18 +188,25 @@ PATCH  /api/posts/:id/like
 DELETE /api/posts/:id
 ```
 
-🧠 Learning Goals
-Learn modern MERN stack development
+### 6🧠 Learning Goals
+🔹 Full-Stack Development (MERN)
+Build a modern web application using MongoDB, Express.js, React.js, and Node.js from scratch.
 
-Integrate real-world APIs (Proxycurl, OpenAI)
+🔹 Real-World API Integration
+Work with live APIs like Proxycurl and OpenAI to power features such as mentor discovery and AI-driven guidance.
 
-Practice state and theme management with React Context
+🔹 Global State & Theme Management
+Use React Context API to manage user authentication, favorites, bookmarks, and dark/light theme toggling across the app.
 
-Build animations with Framer Motion
+🔹 Smooth UI Animations
+Enhance user experience with responsive, scroll-aware, and interactive animations using Framer Motion.
 
-Enhance UI/UX with Tailwind + Dark Mode
+🔹 Modern UI/UX with Tailwind CSS
+Design visually polished, mobile-first interfaces with Tailwind CSS, complete with hover effects, transitions, and dark mode support.
 
-🤝 Contributing
+
+
+### 7🤝 Contributing
 Pull requests are welcome!
 To contribute:
 ```bash
@@ -212,10 +219,10 @@ Commit your changes
 Push and open a pull request
 ```
 
-📄 License
+### 8📄 License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-🙌 Acknowledgements
+### 9🙌 Acknowledgements
 OpenAI
 
 Proxycurl
