@@ -14,7 +14,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import PostList from "../components/PostList"; // ✅ import split component
+import PostList from "../components/PostList"; 
 
 export default function Community() {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -47,9 +47,6 @@ export default function Community() {
     }
 
     try {
-      console.log("🧪 Creating post with token:", activeToken);
-      console.log("🧪 Creating post by user:", user);
-
       await axios.post(
         "http://localhost:5050/api/posts",
         {
@@ -108,13 +105,9 @@ export default function Community() {
 
           <button
             onClick={toggleDarkMode}
-            className={`p-2 rounded-full border transition ${
-              darkMode
-                ? "bg-white text-black hover:bg-gray-200"
-                : "bg-white text-black hover:bg-gray-100"
-            }`}
+            className="text-2xl hover:scale-110 transition-transform sm:ml-4"
           >
-            {darkMode ? <Sun size={22} /> : <Moon size={22} />}
+            <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
           </button>
         </div>
 
@@ -276,8 +269,13 @@ export default function Community() {
             </div>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer className="mt-12 text-center text-sm text-gray-400 dark:text-gray-500 py-6">
+          <hr className="mb-4 border-gray-700" />
+          <p>© {new Date().getFullYear()} MentorX. Made with 💙 by the community.</p>
+        </footer>
       </div>
     </div>
   );
 }
-

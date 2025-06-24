@@ -20,25 +20,28 @@ export default function PostCard({ post, darkMode, fetchPosts, index = 0, onDele
   const liked = post.likes?.some(id => id.toString() === normalizedUserId);
 
   const toggleLike = async () => {
-    if (!localUser || !activeToken) {
-      toast.warn("Login to like posts");
+    const isLoggedIn = activeToken && normalizedUserId;
+  
+    if (!isLoggedIn) {
+      toast.warn("⚠️ Please login to like posts");
       return;
     }
-
+  
     try {
       await axios.patch(
         `http://localhost:5050/api/posts/${post._id}/like`,
         {},
         { headers: { Authorization: `Bearer ${activeToken}` } }
       );
-      if (!liked && fetchPosts) fetchPosts(); // New like, just refresh all
-      else if (liked && onUnlike) onUnlike(post._id); // Removed like on dashboard
+      if (!liked && fetchPosts) fetchPosts(); // New like
+      else if (liked && onUnlike) onUnlike(post._id); // Unlike inside dashboard
       else if (fetchPosts) fetchPosts(); // fallback
     } catch (err) {
       console.error("Like failed", err.response?.data || err.message);
       toast.error("Failed to like/unlike post");
     }
   };
+  
 
   const deletePost = async () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this post?");

@@ -8,6 +8,7 @@ import axios from 'axios';
 import Loader from '../components/Loader';
 import MentorCard from './partials/MentorCard';
 import 'remixicon/fonts/remixicon.css';
+import AIChatBox from "../components/AiChatBot";
 
 const careerOptions = ['All', 'Machine Learning', 'Data Science', 'Blockchain', 'Full Stack', 'Cybersecurity', 'App Development'];
 
@@ -100,15 +101,7 @@ const MentorAI = () => {
             <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
           </button>
         </div>
-        <div
-          className={`h-[80%] md:h-[85vh] rounded-xl p-4 flex justify-center items-center text-sm transition-all duration-300 ${
-            darkMode
-              ? 'bg-zinc-800 border border-zinc-700 text-gray-400'
-              : 'bg-gray-100 border border-gray-300 text-gray-500'
-          }`}
-        >
-          (AI chat feature coming soon)
-        </div>
+        <AIChatBox />
       </motion.div>
 
       <div id="mentor-scrollable-div" className="w-full lg:w-1/2 h-[55vh] md:h-screen overflow-y-auto px-6 py-6">
@@ -157,6 +150,17 @@ const MentorAI = () => {
             <FaUserGraduate className="absolute top-3 right-3 text-gray-400 pointer-events-none" />
           </div>
         </motion.div>
+        {/* ✅ Your Top Mentors */}
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className={`text-xl font-semibold mb-4 ${
+            darkMode ? 'text-white' : 'text-zinc-800'
+          }`}
+        >
+          🌟 Mentors to Guide
+        </motion.h3>
 
         <InfiniteScroll
           dataLength={displayedMentors.length}
