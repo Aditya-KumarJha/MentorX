@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, BookmarkIcon } from "@radix-ui/react-icons";
 import { useTheme } from "../context/ThemeContext";
+import { useAuth } from "../context/AuthContext";
 import { fetchAIResponse } from "../utils/fetchAIResponse";
+import BookmarkModal from "./partials/BookmarkModal";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-// Format AI message: bullets + paragraphs
 const formatAIContent = (content) => {
   return content.split("\n").map((line, i) => {
     const trimmed = line.trim();
@@ -32,7 +35,6 @@ const formatAIContent = (content) => {
   });
 };
 
-// Typing dots animation
 const TypingDots = () => (
   <div className="flex gap-1 items-center px-4 py-2 rounded-lg bg-zinc-200 text-black dark:bg-zinc-700 dark:text-white w-fit text-sm">
     <span className="animate-bounce delay-0">.</span>
@@ -43,11 +45,14 @@ const TypingDots = () => (
 
 const AIChatBox = () => {
   const { darkMode } = useTheme();
+  const { isAuthenticated, user } = useAuth();
   const [messages, setMessages] = useState([
     { role: "ai", content: "Hey! I'm Mentor AI. How can I help you today?" },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showBookmarkModal, setShowBookmarkModal] = useState(false);
+  const [bookmarkId, setBookmarkId] = useState(null);
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -85,6 +90,53 @@ const AIChatBox = () => {
     }
   };
 
+  const handleBookmarkClick = async () => {
+    if (!isAuthenticated) {
+      toast.error("Please login to save conversation");
+      return;
+    }
+  
+    const userMessagesExist = messages.some((msg) => msg.role === "user");
+  
+    if (!userMessagesExist) {
+      toast.info("Start a conversation to bookmark it!");
+      return;
+    }
+  
+    if (bookmarkId) {
+      try {
+        await axios.delete(
+          `http://localhost:5050/api/chat-bookmarks/${bookmarkId}`,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        );
+        toast.warn("❌Conversation removed from bookmarks");
+        setBookmarkId(null);
+      } catch (err) {
+        toast.error("Failed to remove bookmark");
+      }
+    } else {
+      setShowBookmarkModal(true);
+    }
+  };
+  
+
+  const handleSaveBookmark = async (heading) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:5050/api/chat-bookmarks",
+        { heading, messages },
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+      setBookmarkId(res.data.bookmarkId || res.data._id);
+      toast.success("Conversation bookmarked!");
+      setShowBookmarkModal(false);
+    } catch (err) {
+      toast.error("Failed to save bookmark");
+    }
+  };
+
   return (
     <div
       className={`h-[80%] md:h-[85vh] flex flex-col justify-between rounded-xl transition-all border ${
@@ -95,22 +147,43 @@ const AIChatBox = () => {
     >
       {/* Chat Messages */}
       <div className="flex-1 p-4 space-y-3 overflow-y-auto">
-        {messages.map((msg, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`px-4 py-2 w-fit max-w-[75%] rounded-lg text-sm ${
-              msg.role === "user"
-                ? "ml-auto bg-indigo-500 text-white"
-                : "bg-zinc-200 text-black dark:bg-zinc-700 dark:text-white"
-            }`}
-          >
-            {msg.role === "ai"
-              ? formatAIContent(msg.content)
-              : <span>{msg.content}</span>}
-          </motion.div>
-        ))}
+        {messages.map((msg, i) => {
+          const isFirstAI = i === 0 && msg.role === "ai";
+
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`w-fit max-w-[75%] text-sm rounded-lg ${
+                msg.role === "user"
+                  ? "ml-auto bg-indigo-500 text-white px-4 py-2"
+                  : "bg-zinc-200 text-black dark:bg-zinc-700 dark:text-white p-3"
+              }`}
+            >
+              {msg.role === "ai" && isFirstAI ? (
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">{formatAIContent(msg.content)}</div>
+                  <button
+                    onClick={handleBookmarkClick}
+                    title="Toggle Bookmark"
+                    className={`p-2 rounded-full shadow transition hover:scale-[1.2] ${
+                      bookmarkId
+                        ? "bg-indigo-100 text-indigo-600"
+                        : "bg-white dark:bg-zinc-800 text-zinc-600 dark:text-white"
+                    }`}
+                  >
+                    <BookmarkIcon className="w-5 h-5" />
+                  </button>
+                </div>
+              ) : msg.role === "ai" ? (
+                formatAIContent(msg.content)
+              ) : (
+                <span>{msg.content}</span>
+              )}
+            </motion.div>
+          );
+        })}
         {isLoading && <TypingDots />}
         <div ref={scrollRef} />
       </div>
@@ -141,6 +214,14 @@ const AIChatBox = () => {
           <PaperPlaneIcon className="h-4 w-4" />
         </button>
       </div>
+
+      {/* Bookmark Modal */}
+      {showBookmarkModal && (
+        <BookmarkModal
+          onClose={() => setShowBookmarkModal(false)}
+          onSave={handleSaveBookmark}
+        />
+      )}
     </div>
   );
 };

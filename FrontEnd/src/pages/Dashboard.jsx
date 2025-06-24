@@ -10,6 +10,8 @@ import Loader from '../components/Loader';
 import MentorCard from '../components/partials/MentorCard';
 import CourseCard from '../components/partials/CourseCard';
 import PostCard from '../components/PostCard';
+import { BookmarkIcon } from '@radix-ui/react-icons';
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -20,6 +22,7 @@ const Dashboard = () => {
   const [loadingCourses, setLoadingCourses] = useState(true);
   const [likedPosts, setLikedPosts] = useState([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
+  const [bookmarkedChats, setBookmarkedChats] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const showLoader = loading || (isAuthenticated && (!userName || userName.trim() === ''));
@@ -77,6 +80,40 @@ const Dashboard = () => {
     }
   }, [isAuthenticated, user?.token, fetchFavorites]);
 
+  useEffect(() => {
+    const fetchChatBookmarks = async () => {
+      if (!user?.token) return;
+      try {
+        const res = await fetch('http://localhost:5050/api/chat-bookmarks', {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        const data = await res.json();
+        setBookmarkedChats(data.bookmarks || []);
+      } catch (err) {
+        console.error('Failed to fetch chat bookmarks:', err);
+      }
+    };
+
+    if (isAuthenticated && user?.token) {
+      fetchChatBookmarks();
+    }
+  }, [isAuthenticated, user?.token]);
+
+  const handleRemoveChatBookmark = async (chatId) => {
+    try {
+      await fetch(`http://localhost:5050/api/chat-bookmarks/${chatId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      setBookmarkedChats(prev => prev.filter(c => c._id !== chatId));
+      toast.warn('❌ Conversation removed from bookmarks');
+    } catch (err) {
+      toast.error('Failed to remove bookmark');
+    }
+  };
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -114,7 +151,6 @@ const Dashboard = () => {
 
   return (
     <div className={`${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'} min-h-screen transition`}>
-      {/* Header */}
       <header className={`w-full px-4 sm:px-6 py-4 shadow ${darkMode ? 'bg-zinc-800' : 'bg-white'}`}>
         <div className="flex justify-between items-center md:hidden">
           <h1 className={`text-lg sm:text-xl ${headerTextStyle}`}>Welcome, {userName}</h1>
@@ -281,8 +317,46 @@ const Dashboard = () => {
           <p className="opacity-60 italic">You haven't liked any posts yet.</p>
           ) : null}
         </section>
-      </main>
 
+      {/* Saved Conversations */}
+      <section className="mb-12 text-left">
+        <h3 className={sectionTitleStyle}>📌 Saved Conversations</h3>
+        {bookmarkedChats.length > 0 ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {bookmarkedChats.map((chat, index) => (
+              <div
+                key={chat._id || index}
+                className={`p-5 rounded-xl transition-all duration-300 cursor-pointer transform ${
+                  darkMode
+                    ? 'bg-zinc-800 border border-zinc-700 shadow-[0_4px_16px_rgba(200,200,200,0.08)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.12)]'
+                    : 'bg-white border border-gray-200 shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)]'
+                } hover:scale-[1.03]`}               
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-semibold text-lg truncate">
+                    {chat.heading}
+                  </h4>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemoveChatBookmark(chat._id);
+                    }}
+                    className="p-1 rounded-full bg-indigo-100 hover:bg-indigo-200"
+                  >
+                    <BookmarkIcon className="w-5 h-5 text-indigo-600" />
+                  </button>
+                </div>
+                <p className="text-sm opacity-70 line-clamp-3">
+                  {chat.messages?.[1]?.content || 'AI conversation preview...'}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="opacity-60 italic">No conversations bookmarked yet.</p>
+        )}
+      </section>
+    </main>
       <style>
         {`
           @keyframes scroll-left {
