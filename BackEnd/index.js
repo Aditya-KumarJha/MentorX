@@ -11,6 +11,7 @@ import courseRoutes from './routes/courseRoutes.js';
 import bookmarkRoutes from './routes/bookmarkRoutes.js';
 import communityRoutes from './routes/communityRoutes.js'; 
 import aiRoutes from "./routes/aiRoutes.js";
+import chatBookmarkRoutes from './routes/chatBookmarkRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -33,6 +34,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes); 
 app.use('/api/bookmarks', bookmarkRoutes);
 app.use("/api/ai", aiRoutes);
+app.use('/api/chat-bookmarks', chatBookmarkRoutes);
 
 // ✅ Mount communityRoutes directly under /api so routes like /api/posts work
 app.use('/api', communityRoutes);
