@@ -15,6 +15,7 @@ import EduMatrix from './components/EduMatrix';
 
 import { FavoritesProvider } from './context/FavouritesContext';
 import Community from './pages/Community';
+import PathFinderAI from './components/PathFinderAI';
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/mentor/:name" element={<MentorDetail />} />
           <Route path="/edumatrix" element={<EduMatrix />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/pathfinder-ai" element={<PathFinderAI />} />
 
           <Route
             path="/dashboard"
