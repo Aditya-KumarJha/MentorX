@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useFavorites } from '../context/FavouritesContext';
 import { motion } from 'framer-motion';
 import { Sun, Moon } from 'lucide-react';
-import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaBars } from 'react-icons/fa';
+import { FaUserGraduate, FaBrain, FaUsers, FaCompass, FaBars, FaArrowLeft } from 'react-icons/fa';
 import Loader from '../components/Loader';
 import MentorCard from '../components/partials/MentorCard';
 import CourseCard from '../components/partials/CourseCard';
@@ -153,7 +153,12 @@ const Dashboard = () => {
     <div className={`${darkMode ? 'bg-zinc-900 text-white' : 'bg-white text-zinc-900'} min-h-screen transition`}>
       <header className={`w-full px-4 sm:px-6 py-4 shadow ${darkMode ? 'bg-zinc-800' : 'bg-white'}`}>
         <div className="flex justify-between items-center md:hidden">
-          <h1 className={`text-lg sm:text-xl ${headerTextStyle}`}>Welcome, {userName}</h1>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/')} className="text-xl hover:scale-110 transition">
+              <FaArrowLeft />
+            </button>
+            <h1 className={`text-lg sm:text-xl ${headerTextStyle}`}>Welcome, {userName}</h1>
+          </div>
           <div className="flex items-center gap-3">
             <button onClick={toggleDarkMode}>{darkMode ? <Sun size={18} /> : <Moon size={18} />}</button>
             <button
@@ -169,7 +174,12 @@ const Dashboard = () => {
         </div>
 
         <div className="hidden md:flex justify-between items-center">
-          <h1 className={`text-2xl ${headerTextStyle}`}>Welcome, {userName}</h1>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/')} className="text-xl hover:scale-110 transition">
+              <FaArrowLeft />
+            </button>
+            <h1 className={`text-2xl ${headerTextStyle}`}>Welcome, {userName}</h1>
+          </div>
           <nav className="flex flex-wrap justify-center gap-8 text-sm sm:text-base font-semibold">
             {menuItems.map(({ label, href, icon }, i) => (
               <div
@@ -357,6 +367,12 @@ const Dashboard = () => {
           <p className="opacity-60 italic">No conversations bookmarked yet.</p>
         )}
       </section>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center text-sm text-gray-400 dark:text-gray-500 py-6">
+          <hr className="mb-4 border-gray-700" />
+          <p>© {new Date().getFullYear()} MentorX. Made with 💙 by the community.</p>
+      </footer>
     </main>
       <style>
         {`

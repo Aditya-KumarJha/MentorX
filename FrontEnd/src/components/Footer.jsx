@@ -7,7 +7,7 @@ import 'remixicon/fonts/remixicon.css';
 
 const Footer = () => {
   const { darkMode } = useTheme();
-  const { isAuthenticated } = useAuth(); // 🔑 Get login status
+  const { isAuthenticated } = useAuth(); 
   const navigate = useNavigate();
 
   const bgColor = darkMode ? 'bg-zinc-900 text-white' : 'bg-gray-50 text-gray-900';

@@ -126,7 +126,6 @@ const Navbar = ({ contactRef, onContactClick }) => {
               </button>
             </div>
           ) : (
-            // ✅ Logout (same as login style)
             <button
               onClick={handleLogout}
               className="relative overflow-hidden px-4 py-1.5 sm:px-6 sm:py-2 font-semibold border-2 border-red-500 text-red-500 rounded-full z-10 group transition-all duration-300 text-sm sm:text-base hidden md:flex"

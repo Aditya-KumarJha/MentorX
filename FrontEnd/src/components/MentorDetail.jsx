@@ -164,7 +164,7 @@ const MentorDetail = () => {
           </div>
         </div>
 
-        {/* Info Sections (unchanged) */}
+        {/* Info Sections */}
         <div className="mt-14 flex flex-col md:flex-row gap-12">
           <div className="flex-1 space-y-12">
             {mentor.education?.length > 0 && (

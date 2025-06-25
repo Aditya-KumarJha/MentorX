@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import {
   FaQuestionCircle,
   FaRobot,
-  FaUserCheck,
   FaUserPlus,
   FaRegLightbulb
 } from 'react-icons/fa';

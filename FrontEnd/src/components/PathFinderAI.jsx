@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
-import { FaExchangeAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaExchangeAlt, FaArrowLeft, FaCompass } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -135,10 +135,14 @@ const PathFinderAI = () => {
         transition={{ duration: 0.6 }}
         className="max-w-4xl mx-auto text-center"
       >
-        <h1 className="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
+        <h1 className="text-4xl font-bold mb-4 flex justify-center items-center gap-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500">
+        <FaCompass
+          className={`text-blue-500 dark:text-purple-400 hover:scale-125 transition-transform duration-300`}
+          size={30}
+        />
           PathFinder AI
         </h1>
-        <p className="text-lg mb-6">Discover your ideal career path with AI-powered guidance.</p>
+        <h3 className="text-lg mb-6">Discover your ideal career path with AI-powered guidance.</h3>
 
         <div className="flex justify-center items-center gap-3 mb-6">
           <button

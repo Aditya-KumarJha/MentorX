@@ -12,6 +12,7 @@ import PrivateRoute from './components/PrivateRoute';
 import MentorAI from './components/MentorAI';
 import MentorDetail from './components/MentorDetail';
 import EduMatrix from './components/EduMatrix'; 
+import NotFound from './components/NotFound';
 
 import { FavoritesProvider } from './context/FavouritesContext';
 import Community from './pages/Community';
@@ -22,7 +23,6 @@ const App = () => {
     <div className="min-h-screen">
       <ToastContainer position="top-right" autoClose={3000} />
       
-      {/* ✅ Wrap your entire app with FavoritesProvider */}
       <FavoritesProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -33,6 +33,7 @@ const App = () => {
           <Route path="/edumatrix" element={<EduMatrix />} />
           <Route path="/community" element={<Community />} />
           <Route path="/pathfinder-ai" element={<PathFinderAI />} />
+          <Route path="*" element={<NotFound />} />
 
           <Route
             path="/dashboard"
