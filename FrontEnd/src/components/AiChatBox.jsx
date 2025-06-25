@@ -43,12 +43,18 @@ const TypingDots = () => (
   </div>
 );
 
-const AIChatBox = () => {
+const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
   const { darkMode } = useTheme();
   const { isAuthenticated, user } = useAuth();
-  const [messages, setMessages] = useState([
-    { role: "ai", content: "Hey! I'm Mentor AI. How can I help you today?" },
-  ]);
+
+  const [messages, setMessages] = useState(() => {
+    const loaded =
+      Array.isArray(initialMessages) && initialMessages.length > 0
+        ? initialMessages
+        : [{ role: "ai", content: "Hey! I'm Mentor AI. How can I help you today?" }];
+    return loaded;
+  });
+
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showBookmarkModal, setShowBookmarkModal] = useState(false);
@@ -71,9 +77,7 @@ const AIChatBox = () => {
     const fullMessages = [
       { role: "system", content: "You are a helpful career mentor." },
       ...updatedMessages.map((msg) =>
-        msg.role === "ai"
-          ? { role: "assistant", content: msg.content }
-          : msg
+        msg.role === "ai" ? { role: "assistant", content: msg.content } : msg
       ),
     ];
 
@@ -95,22 +99,18 @@ const AIChatBox = () => {
       toast.error("Please login to save conversation");
       return;
     }
-  
+
     const userMessagesExist = messages.some((msg) => msg.role === "user");
-  
     if (!userMessagesExist) {
       toast.info("Start a conversation to bookmark it!");
       return;
     }
-  
+
     if (bookmarkId) {
       try {
-        await axios.delete(
-          `http://localhost:5050/api/chat-bookmarks/${bookmarkId}`,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          }
-        );
+        await axios.delete(`http://localhost:5050/api/chat-bookmarks/${bookmarkId}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
         toast.warn("❌Conversation removed from bookmarks");
         setBookmarkId(null);
       } catch (err) {
@@ -120,7 +120,6 @@ const AIChatBox = () => {
       setShowBookmarkModal(true);
     }
   };
-  
 
   const handleSaveBookmark = async (heading) => {
     try {
@@ -142,10 +141,15 @@ const AIChatBox = () => {
       className={`h-[80%] md:h-[85vh] flex flex-col justify-between rounded-xl transition-all border ${
         darkMode
           ? "bg-zinc-800 border-zinc-700 text-white"
-          : "bg-gray-100 border-gray-300 text-zinc-900"
+          : "bg-white border-gray-300 text-zinc-900"
       }`}
     >
-      {/* Chat Messages */}
+      {initialHeading && (
+        <div className="text-xs text-zinc-500 dark:text-zinc-300 italic p-2 px-4 border-b border-zinc-700">
+          💬 Saved Topic: <span className="font-medium">{initialHeading}</span>
+        </div>
+      )}
+
       <div className="flex-1 p-4 space-y-3 overflow-y-auto">
         {messages.map((msg, i) => {
           const isFirstAI = i === 0 && msg.role === "ai";
@@ -158,7 +162,11 @@ const AIChatBox = () => {
               className={`w-fit max-w-[75%] text-sm rounded-lg ${
                 msg.role === "user"
                   ? "ml-auto bg-indigo-500 text-white px-4 py-2"
-                  : "bg-zinc-200 text-black dark:bg-zinc-700 dark:text-white p-3"
+                  : `${
+                      darkMode
+                        ? "bg-zinc-700 text-white"
+                        : "bg-gray-200 text-zinc-900"
+                    } p-3`
               }`}
             >
               {msg.role === "ai" && isFirstAI ? (
@@ -188,7 +196,6 @@ const AIChatBox = () => {
         <div ref={scrollRef} />
       </div>
 
-      {/* Input Box */}
       <div className="p-3 border-t border-zinc-600 flex items-center gap-2">
         <textarea
           value={input}
@@ -215,7 +222,6 @@ const AIChatBox = () => {
         </button>
       </div>
 
-      {/* Bookmark Modal */}
       {showBookmarkModal && (
         <BookmarkModal
           onClose={() => setShowBookmarkModal(false)}

@@ -15,28 +15,34 @@ export const getAIResponse = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "http://localhost:5173",
+        "HTTP-Referer": "http://localhost:5173", // ✅ Replace with prod domain in production
         "X-Title": "MentorX-AI",
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
-        messages, // ✅ using full chat history
+        model: "gryphe/mythomax-l2-13b", // Or try "anthropic/claude-3-haiku"
+        messages,
         temperature: 0.7,
         max_tokens: 300,
       }),
     });
 
     const data = await response.json();
+
+    if (!response.ok) {
+      console.error("❌ OpenRouter Error Response:", data);
+      return res.status(500).json({ error: "OpenRouter failed", details: data });
+    }
+
     const aiMessage = data?.choices?.[0]?.message?.content;
 
     if (!aiMessage) {
-      console.log("🛑 Invalid OpenRouter response:", data);
-      return res.status(500).json({ error: "Failed to get a valid AI response" });
+      console.error("🛑 No valid AI message received:", data);
+      return res.status(500).json({ error: "Failed to get valid AI response" });
     }
 
     res.status(200).json({ response: aiMessage });
   } catch (err) {
-    console.error("OpenRouter API Error:", err.message);
+    console.error("🔥 OpenRouter API Error:", err.message);
     res.status(500).json({ error: "Something went wrong while fetching AI response." });
   }
 };

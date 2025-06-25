@@ -2,19 +2,24 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { motion } from 'framer-motion';
 import { FaSearch, FaUserGraduate } from 'react-icons/fa';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import Loader from '../components/Loader';
 import MentorCard from './partials/MentorCard';
 import 'remixicon/fonts/remixicon.css';
-import AIChatBox from "../components/AiChatBot";
+import AIChatBox from "./AiChatBox";
 
 const careerOptions = ['All', 'Machine Learning', 'Data Science', 'Blockchain', 'Full Stack', 'Cybersecurity', 'App Development'];
 
 const MentorAI = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+
+  const [chatState] = useState(() => {
+    return location.state?.chat || null;
+  });
 
   const [search, setSearch] = useState(searchParams.get('search') || '');
   const [careerFilter, setCareerFilter] = useState(searchParams.get('career') || 'All');
@@ -33,6 +38,7 @@ const MentorAI = () => {
         setMentors(shuffleArray(fetched));
         setLoading(false);
       } catch (err) {
+        console.error("❌ Error fetching mentors:", err);
         setLoading(false);
       }
     };
@@ -78,7 +84,6 @@ const MentorAI = () => {
         style={{ borderColor: darkMode ? '#3f3f46' : '#e5e7eb' }}
       >
         <div className="flex justify-start items-center mb-4 gap-4">
-          {/* Back Arrow → Link to Homepage */}
           <Link
             to="/"
             className="text-3xl hover:scale-110 transition-transform"
@@ -88,7 +93,6 @@ const MentorAI = () => {
             <i className="ri-arrow-left-line" />
           </Link>
 
-          {/* Heading and icon shifted left */}
           <h2 className="text-3xl font-bold flex items-center gap-2 select-none">
             <i className="ri-robot-2-line text-3xl animate-bounce" />
             <span className="bg-gradient-to-r from-cyan-400 to-rose-500 bg-clip-text text-transparent">
@@ -96,12 +100,15 @@ const MentorAI = () => {
             </span>
           </h2>
 
-          {/* Theme toggle button */}
           <button onClick={toggleDarkMode} className="ml-auto text-2xl hover:scale-110 transition-transform">
             <i className={`ri-${darkMode ? 'sun' : 'moon'}-line`} />
           </button>
         </div>
-        <AIChatBox />
+
+        <AIChatBox
+          initialMessages={chatState?.messages || []}
+          initialHeading={chatState?.heading || ''}
+        />
       </motion.div>
 
       <div id="mentor-scrollable-div" className="w-full lg:w-1/2 h-[55vh] md:h-screen overflow-y-auto px-6 py-6">
@@ -150,7 +157,7 @@ const MentorAI = () => {
             <FaUserGraduate className="absolute top-3 right-3 text-gray-400 pointer-events-none" />
           </div>
         </motion.div>
-        {/* ✅ Your Top Mentors */}
+
         <motion.h3
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

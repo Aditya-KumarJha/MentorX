@@ -325,13 +325,14 @@ const Dashboard = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {bookmarkedChats.map((chat, index) => (
               <div
-                key={chat._id || index}
-                className={`p-5 rounded-xl transition-all duration-300 cursor-pointer transform ${
-                  darkMode
-                    ? 'bg-zinc-800 border border-zinc-700 shadow-[0_4px_16px_rgba(200,200,200,0.08)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.12)]'
-                    : 'bg-white border border-gray-200 shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)]'
-                } hover:scale-[1.03]`}               
-              >
+              key={chat._id || index}
+              onClick={() => navigate('/mentor-ai', { state: { chat } })}
+              className={`p-5 rounded-xl transition-all duration-300 cursor-pointer transform ${
+                darkMode
+                  ? 'bg-zinc-800 border border-zinc-700 shadow-[0_4px_16px_rgba(200,200,200,0.08)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.12)]'
+                  : 'bg-white border border-gray-200 shadow-[0_4px_16px_rgba(0,0,0,0.15)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)]'
+              } hover:scale-[1.03]`}
+            >            
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-semibold text-lg truncate">
                     {chat.heading}
