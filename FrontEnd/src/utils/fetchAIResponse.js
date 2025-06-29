@@ -1,6 +1,6 @@
 export const fetchAIResponse = async (messages) => {
     try {
-      const res = await fetch("https://mentorx-backend.onrender.com/api/ai/chat", {
+      const res = await fetch("http://localhost:5050/api/ai/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

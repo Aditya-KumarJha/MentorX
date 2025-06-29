@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://mentorx-backend.onrender.com/', 
+  baseURL: 'https://mentorx-backend.onrender.com',  
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
