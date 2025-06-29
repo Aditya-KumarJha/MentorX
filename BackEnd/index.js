@@ -15,12 +15,15 @@ import chatBookmarkRoutes from './routes/chatBookmarkRoutes.js';
 import pathFinderRoutes from './routes/pathFinderRoutes.js'; 
 
 dotenv.config();
-
 connectDB();
 
 const app = express();
 
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: "https://mentorx-frontend.onrender.com", // ← replace with actual frontend URL
+  credentials: true,
+}));
+
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -32,7 +35,6 @@ app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/chat-bookmarks', chatBookmarkRoutes);
 app.use('/api/pathfinder', pathFinderRoutes); 
-
 app.use('/api', communityRoutes);
 
 app.get('/', (req, res) => {
