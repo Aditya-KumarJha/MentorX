@@ -6,7 +6,7 @@ MentorX is an all-in-one AI-powered mentorship platform designed to help users n
 
 ## 🔗 Live Demo
 
-Deployed Link Soon
+**Website Link:** [https://mentorx-2koy.onrender.com](https://mentorx-2koy.onrender.com)
 
 ---
 
@@ -223,7 +223,7 @@ Push and open a pull request
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ### 9🙌 Acknowledgements
-OpenAI
+OpenRouter 
 
 Proxycurl
 
@@ -234,4 +234,3 @@ Framer Motion
 Remix Icons
 
 Lucide Icons
-
