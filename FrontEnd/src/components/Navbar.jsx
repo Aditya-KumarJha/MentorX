@@ -30,8 +30,8 @@ const Navbar = ({ contactRef, onContactClick }) => {
   };
 
   const navLinks = [
-    { label: "Mentor AI", href: "/mentor-ai", icon: <FaBrain className="inline-block mr-2" /> },
-    { label: "PathFinder AI", href: "/pathfinder-ai", icon: <FaCompass className="inline-block mr-2" /> },
+    { label: "Mentor AI", href: "/mentorai", icon: <FaBrain className="inline-block mr-2" /> },
+    { label: "PathFinder AI", href: "/pathfinderai", icon: <FaCompass className="inline-block mr-2" /> },
     { label: "EduMatrix", href: "/edumatrix", icon: <FaUserGraduate className="inline-block mr-2" /> },
     { label: "Community", href: "/community", icon: <FaUsers className="inline-block mr-2" /> },
   ];

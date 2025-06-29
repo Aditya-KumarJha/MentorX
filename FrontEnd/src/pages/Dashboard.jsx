@@ -115,8 +115,8 @@ const Dashboard = () => {
   };
 
   const menuItems = [
-    { label: 'Mentor AI', href: '/mentor-ai', icon: <FaBrain className="inline-block mr-2" /> },
-    { label: 'PathFinder AI', href: '/pathfinder-ai', icon: <FaCompass className="inline-block mr-2" /> },
+    { label: 'Mentor AI', href: '/mentorai', icon: <FaBrain className="inline-block mr-2" /> },
+    { label: 'PathFinder AI', href: '/pathfinderai', icon: <FaCompass className="inline-block mr-2" /> },
     { label: 'EduMatrix', href: '/edumatrix', icon: <FaUserGraduate className="inline-block mr-2" /> },
     { label: 'Community', href: '/community', icon: <FaUsers className="inline-block mr-2" /> },
   ];
@@ -331,7 +331,7 @@ const Dashboard = () => {
             {bookmarkedChats.map((chat, index) => (
               <div
               key={chat._id || index}
-              onClick={() => navigate('/mentor-ai', { state: { chat } })}
+              onClick={() => navigate('/mentorai', { state: { chat } })}
               className={`p-5 rounded-xl transition-all duration-300 cursor-pointer transform ${
                 darkMode
                   ? 'bg-zinc-800 border border-zinc-700 shadow-[0_4px_16px_rgba(200,200,200,0.08)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.12)]'

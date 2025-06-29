@@ -28,11 +28,11 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/mentor-ai" element={<MentorAI />} />
+          <Route path="/mentorai" element={<MentorAI />} />
           <Route path="/mentor/:name" element={<MentorDetail />} />
           <Route path="/edumatrix" element={<EduMatrix />} />
           <Route path="/community" element={<Community />} />
-          <Route path="/pathfinder-ai" element={<PathFinderAI />} />
+          <Route path="/pathfinderai" element={<PathFinderAI />} />
           <Route path="*" element={<NotFound />} />
 
           <Route
