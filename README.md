@@ -4,9 +4,9 @@ MentorX is an all-in-one AI-powered mentorship platform designed to help users n
 
 ---
 
-## 🔗 Live Demo
+## Live Demo
 
-**Website Link:** [https://mentorx-2koy.onrender.com](https://mentorx-2koy.onrender.com)
+**🔗 Check Website:** [Click Here](https://mentorx-2koy.onrender.com)
 
 ---
 
@@ -26,6 +26,7 @@ MentorX is an all-in-one AI-powered mentorship platform designed to help users n
   - ❤️ Favorite Mentors
   - 🔖 Bookmarked Courses
   - ✍️ Liked Posts
+  - 💬 Saved Chat Conversations
 
 ### 🌗 Dark/Light Theme
 - Toggle themes with `localStorage` persistence.
@@ -87,9 +88,15 @@ Create a .env file in the BackEnd/ folder:
 
 ```bash
 PORT=5050
-MONGODB_URI=your_mongodb_connection_string
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-PROXYCURL_API_KEY=your_proxycurl_key
+PROXYCURL_API_KEY=your_proxycurl_api_key
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+RAPIDAPI_KEYS=your_rapidapi_key
+RAPIDAPI_HOST=your_rapidapi_host
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 Then start the backend:
@@ -223,14 +230,35 @@ Push and open a pull request
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ### 9🙌 Acknowledgements
-OpenRouter 
 
-Proxycurl
+OpenRouter – For AI model routing and completions
 
-Tailwind CSS
+Proxycurl – Real-world mentor data API
 
-Framer Motion
+MongoDB Atlas – Cloud database solution
 
-Remix Icons
+Cloudinary – Media storage and image delivery
 
-Lucide Icons
+Tailwind CSS – Utility-first styling framework
+
+Framer Motion – Declarative animations for React
+
+Remix Icons – Icon set used in UI
+
+Lucide Icons – Feather icon alternative
+
+React Toastify – Notification management
+
+React Router DOM – SPA routing
+
+Node.js + Express.js – Backend runtime and API framework
+
+Vite – Fast dev server and bundler
+
+Render – Free full-stack deployment platform
+
+Web3Forms – Contact form submission service
+
+Udemy API (via RapidAPI) – Planned course data integration
+
+Adzuna API (via RapidAPI) – Planned job data integration
