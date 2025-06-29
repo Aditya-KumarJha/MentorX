@@ -1,6 +1,6 @@
 export const fetchAIResponse = async (messages) => {
   try {
-    const res = await fetch("https://mentorx-2koy.onrender.com/api/ai/chat", {
+    const res = await fetch("https://mentorx-backend.onrender.com/api/ai/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -9,19 +9,19 @@ export const fetchAIResponse = async (messages) => {
     });
 
     const text = await res.text(); 
-    let data;
+    let data = {};
 
     try {
       data = JSON.parse(text);
     } catch (jsonErr) {
       console.error("❌ AI API JSON Parse Error:", jsonErr);
       console.warn("⚠️ Raw response text received:", text);
-      return "Oops! Something went wrong. Please try again later.";
+      return "Oops! Something went wrong. Try again later.";
     }
 
     if (!res.ok) {
       console.error("❌ AI API Response Error:", res.status, res.statusText, data);
-      return data?.response || "Sorry, the AI couldn't respond properly.";
+      return "Sorry, the AI couldn't respond properly.";
     }
 
     if (!data?.response) {
@@ -33,6 +33,6 @@ export const fetchAIResponse = async (messages) => {
 
   } catch (err) {
     console.error("🔥 AI API Network Error:", err);
-    return "Oops! Something went wrong. Please check your internet or try again later.";
+    return "Oops! Something went wrong. Try again later.";
   }
 };
