@@ -20,7 +20,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: "https://mentorx-frontend.onrender.com", // ← replace with actual frontend URL
+  origin: "https://mentorx-2koy.onrender.com/", 
   credentials: true,
 }));
 

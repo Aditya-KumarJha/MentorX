@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY,
   baseURL: 'https://openrouter.ai/api/v1', 
   defaultHeaders: {
-    'HTTP-Referer': 'https://mentorx.ai', 
+    'HTTP-Referer': 'https://mentorx-2koy.onrender.com/', 
     'X-Title': 'MentorX PathFinder AI'
   }
 });

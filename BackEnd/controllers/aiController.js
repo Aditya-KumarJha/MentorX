@@ -15,7 +15,7 @@ export const getAIResponse = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "http://localhost:5173", 
+        "HTTP-Referer": "https://mentorx-2koy.onrender.com/", 
         "X-Title": "MentorX-AI",
       },
       body: JSON.stringify({
