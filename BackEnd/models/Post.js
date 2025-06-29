@@ -52,7 +52,7 @@ const postSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
-  comments: [commentSchema], // ✅ Embedded comments
+  comments: [commentSchema], 
   createdAt: {
     type: Date,
     default: Date.now,

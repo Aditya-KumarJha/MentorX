@@ -5,8 +5,11 @@ import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import { fetchAIResponse } from "../utils/fetchAIResponse";
 import BookmarkModal from "./partials/BookmarkModal";
-import axios from "axios";
+import axios from "../utils/axios";
 import { toast } from "react-toastify";
+import "remixicon/fonts/remixicon.css"; 
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 const formatAIContent = (content) => {
   return content.split("\n").map((line, i) => {
@@ -47,23 +50,52 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
   const { darkMode } = useTheme();
   const { isAuthenticated, user } = useAuth();
 
-  const [messages, setMessages] = useState(() => {
-    const loaded =
-      Array.isArray(initialMessages) && initialMessages.length > 0
-        ? initialMessages
-        : [{ role: "ai", content: "Hey! I'm Mentor AI. How can I help you today?" }];
-    return loaded;
-  });
-
+  const [messages, setMessages] = useState(() =>
+    Array.isArray(initialMessages) && initialMessages.length > 0
+      ? initialMessages
+      : [{ role: "ai", content: "Hey! I'm Mentor AI. How can I help you today?" }]
+  );
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showBookmarkModal, setShowBookmarkModal] = useState(false);
   const [bookmarkId, setBookmarkId] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
   const scrollRef = useRef(null);
+
+  let recognition = null;
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+  }
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
+
+  useEffect(() => {
+    if (!recognition) return;
+
+    recognition.onstart = () => setIsRecording(true);
+    recognition.onend = () => setIsRecording(false);
+
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map(result => result[0].transcript)
+        .join("");
+      setInput(transcript);
+    };
+  }, [recognition]);
+
+  const toggleVoiceInput = () => {
+    if (!recognition) {
+      toast.error("Speech recognition not supported in this browser.");
+      return;
+    }
+    if (isRecording) recognition.stop();
+    else recognition.start();
+  };
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -82,7 +114,6 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
     ];
 
     const aiReply = await fetchAIResponse(fullMessages);
-
     setMessages((prev) => [...prev, { role: "ai", content: aiReply }]);
     setIsLoading(false);
   };
@@ -108,7 +139,7 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
 
     if (bookmarkId) {
       try {
-        await axios.delete(`http://localhost:5050/api/chat-bookmarks/${bookmarkId}`, {
+        await axios.delete(`/api/chat-bookmarks/${bookmarkId}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         toast.warn("❌Conversation removed from bookmarks");
@@ -124,7 +155,7 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
   const handleSaveBookmark = async (heading) => {
     try {
       const res = await axios.post(
-        "http://localhost:5050/api/chat-bookmarks",
+        "/api/chat-bookmarks",
         { heading, messages },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
@@ -153,7 +184,6 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
       <div className="flex-1 p-4 space-y-3 overflow-y-auto">
         {messages.map((msg, i) => {
           const isFirstAI = i === 0 && msg.role === "ai";
-
           return (
             <motion.div
               key={i}
@@ -213,6 +243,20 @@ const AIChatBox = ({ initialMessages = null, initialHeading = "" }) => {
             e.target.style.height = `${e.target.scrollHeight}px`;
           }}
         />
+
+        {/* 🎙 Mic Button */}
+        <button
+          onClick={toggleVoiceInput}
+          className={`p-2 rounded-md transition ${
+            isRecording
+              ? "bg-red-500 text-white animate-pulse"
+              : "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+          }`}
+          title={isRecording ? "Stop Listening" : "Start Voice Input"}
+        >
+          <i className={`ri-${isRecording ? "mic-off-line" : "mic-line"} text-lg`} />
+        </button>
+
         <button
           onClick={handleSend}
           className="bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-md transition"

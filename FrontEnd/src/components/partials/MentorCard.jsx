@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../../context/ThemeContext';
 import { useFavorites } from '../../context/FavouritesContext';
-import { useAuth } from '../../context/AuthContext'; // ✅ get auth globally
+import { useAuth } from '../../context/AuthContext'; 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'remixicon/fonts/remixicon.css';
@@ -11,7 +11,7 @@ import 'remixicon/fonts/remixicon.css';
 const MentorCard = ({ mentor, index }) => {
   const { darkMode } = useTheme();
   const { favoriteIds, toggleFavorite } = useFavorites();
-  const { user, isAuthenticated } = useAuth(); // ✅ use AuthContext
+  const { user, isAuthenticated } = useAuth(); 
   const [imgSrc, setImgSrc] = useState(mentor.profilePic || '/noimage.jpg');
   const [localFavorite, setLocalFavorite] = useState(false);
 

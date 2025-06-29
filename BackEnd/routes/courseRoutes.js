@@ -15,11 +15,8 @@ router.get('/', async (req, res) => {
     const skip = (parseInt(page) - 1) * parseInt(pageSize);
     const limit = parseInt(pageSize);
 
-    // 🔍 Search regex (case-insensitive)
     const searchRegex = new RegExp(search, 'i');
 
-    // 🎯 Dynamic filters
-    // 🎯 Dynamic filters
     const filters = {
       ...(!search && category !== 'all' && { category }),
       ...(search && {
@@ -32,7 +29,6 @@ router.get('/', async (req, res) => {
     };
 
 
-    // 📦 Query DB
     const courses = await Course.find(filters)
       .skip(skip)
       .limit(limit)

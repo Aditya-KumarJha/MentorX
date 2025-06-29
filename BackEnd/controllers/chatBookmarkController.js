@@ -1,10 +1,7 @@
-// controllers/bookmarkController.js
-
 import User from '../models/UserModel.js';
 
-// Save a new conversation bookmark
 export const bookmarkChat = async (req, res) => {
-  const userId = req.user.id; // ✅ comes from auth middleware
+  const userId = req.user.id; 
   const { heading, messages } = req.body;
 
   if (!heading || !messages || !Array.isArray(messages)) {
@@ -15,11 +12,9 @@ export const bookmarkChat = async (req, res) => {
     const user = await User.findById(userId);
     user.bookmarks.push({ heading, messages });
 
-    // ✅ Save and grab the last pushed bookmark
     const savedUser = await user.save();
     const newBookmark = savedUser.bookmarks[savedUser.bookmarks.length - 1];
 
-    // ✅ Return the _id
     res.status(200).json({
       message: 'Conversation bookmarked successfully.',
       bookmarkId: newBookmark._id,
@@ -29,10 +24,9 @@ export const bookmarkChat = async (req, res) => {
   }
 };
 
-// Delete a bookmark by ID
 export const unbookmarkChat = async (req, res) => {
   const userId = req.user.id;
-  const { id } = req.params; // bookmark _id
+  const { id } = req.params; 
 
   try {
     await User.findByIdAndUpdate(userId, {
@@ -45,7 +39,6 @@ export const unbookmarkChat = async (req, res) => {
   }
 };
 
-// Fetch all bookmarks for logged-in user
 export const getBookmarks = async (req, res) => {
   const userId = req.user.id;
 

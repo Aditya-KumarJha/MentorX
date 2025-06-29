@@ -12,6 +12,7 @@ import CourseCard from '../components/partials/CourseCard';
 import PostCard from '../components/PostCard';
 import { BookmarkIcon } from '@radix-ui/react-icons';
 import { toast } from 'react-toastify';
+import axios from '../utils/axios';
 
 const Dashboard = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -43,10 +44,9 @@ const Dashboard = () => {
     const fetchBookmarkedCourses = async () => {
       if (!user?.token) return;
       try {
-        const res = await fetch('http://localhost:5050/api/users/bookmarks', {
+        const { data } = await axios.get('/api/users/bookmarks', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        const data = await res.json();
         setBookmarkedCourses(data.bookmarkedCourses || []);
       } catch (err) {
         console.error('Failed to fetch bookmarked courses:', err);
@@ -62,10 +62,9 @@ const Dashboard = () => {
     const fetchLikedPosts = async () => {
       if (!user?.token) return;
       try {
-        const res = await fetch('http://localhost:5050/api/users/likes', {
+        const { data } = await axios.get('/api/users/likes', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        const data = await res.json();
         setLikedPosts(data.likedPosts || []);
       } catch (err) {
         console.error('Failed to fetch liked posts:', err);
@@ -84,10 +83,9 @@ const Dashboard = () => {
     const fetchChatBookmarks = async () => {
       if (!user?.token) return;
       try {
-        const res = await fetch('http://localhost:5050/api/chat-bookmarks', {
+        const { data } = await axios.get('/api/chat-bookmarks', {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        const data = await res.json();
         setBookmarkedChats(data.bookmarks || []);
       } catch (err) {
         console.error('Failed to fetch chat bookmarks:', err);
@@ -101,11 +99,8 @@ const Dashboard = () => {
 
   const handleRemoveChatBookmark = async (chatId) => {
     try {
-      await fetch(`http://localhost:5050/api/chat-bookmarks/${chatId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+      await axios.delete(`/api/chat-bookmarks/${chatId}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
       });
       setBookmarkedChats(prev => prev.filter(c => c._id !== chatId));
       toast.warn('❌ Conversation removed from bookmarks');
@@ -136,7 +131,7 @@ const Dashboard = () => {
   };
 
   const cardWrapperStyle = {
-    width: '300px',
+    width: '350px',
     minHeight: '340px',
     flexShrink: 0,
   };

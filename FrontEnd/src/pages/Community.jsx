@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
+import axios from "../utils/axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,7 +27,7 @@ export default function Community() {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:5050/api/posts");
+      const res = await axios.get("/api/posts");
       setPosts(res.data);
     } catch (err) {
       console.error("Failed to fetch posts", err);
@@ -48,7 +48,7 @@ export default function Community() {
 
     try {
       await axios.post(
-        "http://localhost:5050/api/posts",
+        "/api/posts",
         {
           ...newPost,
           tags: newPost.tags.split(",").map((t) => t.trim()),

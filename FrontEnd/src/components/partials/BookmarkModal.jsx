@@ -5,12 +5,10 @@ const BookmarkModal = ({ onClose, onSave }) => {
   const [heading, setHeading] = useState("");
   const inputRef = useRef(null);
 
-  // Autofocus input when modal opens
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  // Close modal on Escape key
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") onClose();

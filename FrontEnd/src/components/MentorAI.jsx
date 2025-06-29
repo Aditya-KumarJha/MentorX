@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { FaSearch, FaUserGraduate } from 'react-icons/fa';
 import { useSearchParams, useLocation, Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from 'axios';
+import axios from '../utils/axios';
 import Loader from '../components/Loader';
 import MentorCard from './partials/MentorCard';
 import 'remixicon/fonts/remixicon.css';
@@ -33,7 +33,7 @@ const MentorAI = () => {
   useEffect(() => {
     const fetchMentors = async () => {
       try {
-        const res = await axios.get('http://localhost:5050/api/mentors');
+        const res = await axios.get('/api/mentors');
         const fetched = Array.isArray(res.data) ? res.data : res.data.mentors || [];
         setMentors(shuffleArray(fetched));
         setLoading(false);

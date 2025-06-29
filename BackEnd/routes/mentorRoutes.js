@@ -1,10 +1,8 @@
-// routes/mentorRoutes.js
 import express from 'express';
 import Mentor from '../models/MentorModel.js';
 
 const router = express.Router();
 
-// Fetch all mentors or a specific mentor by name
 router.get('/', async (req, res) => {
   try {
     const { category, name } = req.query;
@@ -23,7 +21,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get similar mentors by matching expertiseTags
 router.get('/similar', async (req, res) => {
   try {
     const tags = req.query.tag;

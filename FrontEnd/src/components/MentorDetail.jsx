@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useTheme } from '../context/ThemeContext';
 import { useFavorites } from '../context/FavouritesContext';
 import Loader from '../components/Loader';
@@ -25,12 +25,12 @@ const MentorDetail = () => {
     const fetchMentor = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5050/api/mentors?name=${encodeURIComponent(name)}`);
+        const res = await axios.get(`/api/mentors?name=${encodeURIComponent(name)}`);
         setMentor(res.data);
 
         if (res.data.expertiseTags?.length > 0) {
           const tagQuery = res.data.expertiseTags.map(tag => `tag=${encodeURIComponent(tag)}`).join('&');
-          const similarRes = await axios.get(`http://localhost:5050/api/mentors/similar?${tagQuery}`);
+          const similarRes = await axios.get(`/api/mentors/similar?${tagQuery}`);
           const filtered = similarRes.data.filter(m => m.fullName !== res.data.fullName);
           setSimilarMentors(shuffleArray(filtered));
         }

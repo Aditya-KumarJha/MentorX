@@ -9,30 +9,25 @@ router.post('/:courseId', protect, async (req, res) => {
   try {
     const courseId = req.params.courseId;
 
-    // ✅ Get full user object from DB
     const user = await User.findById(req.user._id);
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    // ✅ Validate course exists
     const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    // ✅ Check if already bookmarked
     const alreadyBookmarked = user.bookmarkedCourses.some(
       (id) => id.toString() === courseId
     );
 
     if (alreadyBookmarked) {
-      // Remove bookmark
       user.bookmarkedCourses = user.bookmarkedCourses.filter(
         (id) => id.toString() !== courseId
       );
     } else {
-      // Add bookmark
       user.bookmarkedCourses.push(courseId);
     }
 
@@ -44,7 +39,7 @@ router.post('/:courseId', protect, async (req, res) => {
       message: alreadyBookmarked
         ? '❌ Removed from bookmarks'
         : '✅ Bookmarked successfully',
-      updatedBookmarkedCourses: user.bookmarkedCourses, // ✅ ADDED THIS LINE
+      updatedBookmarkedCourses: user.bookmarkedCourses, 
     });
   } catch (err) {
     console.error('Bookmark error:', err);

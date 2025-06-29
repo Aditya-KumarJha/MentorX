@@ -15,11 +15,11 @@ export const getAIResponse = async (req, res) => {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "http://localhost:5173", // ✅ Replace with prod domain in production
+        "HTTP-Referer": "http://localhost:5173", 
         "X-Title": "MentorX-AI",
       },
       body: JSON.stringify({
-        model: "gryphe/mythomax-l2-13b", // Or try "anthropic/claude-3-haiku"
+        model: "gryphe/mythomax-l2-13b", 
         messages,
         temperature: 0.7,
         max_tokens: 300,

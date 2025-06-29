@@ -1,9 +1,5 @@
-import axios from 'axios';
+import axios from '../utils/axios';
 
-// 🌐 Adjust to your actual backend URL if hosted elsewhere
-const BASE_URL = 'http://localhost:5050';
-
-// ✅ Fetch courses from MongoDB with support for category, search, pagination
 export const fetchUdemyCoursesByCategory = async (
   category = 'development',
   page = 1,
@@ -11,7 +7,7 @@ export const fetchUdemyCoursesByCategory = async (
   search = ''
 ) => {
   try {
-    const res = await axios.get(`${BASE_URL}/api/courses`, {
+    const res = await axios.get(`/api/courses`, {
       params: {
         category,
         page,
@@ -20,7 +16,7 @@ export const fetchUdemyCoursesByCategory = async (
       },
     });
 
-    return res.data; // Expected: { success, data, pagination }
+    return res.data; 
   } catch (err) {
     console.error('❌ Error fetching courses from backend:', err.message);
     return {

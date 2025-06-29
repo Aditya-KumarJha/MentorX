@@ -7,13 +7,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from '../context/ThemeContext';
 import { useFavorites } from '../context/FavouritesContext';
-import { useAuth } from '../context/AuthContext'; // ✅ import AuthContext
+import { useAuth } from '../context/AuthContext'; 
 import axios from '../utils/axios';
 
 const Login = () => {
   const { darkMode, toggleDarkMode } = useTheme();
   const { fetchFavorites } = useFavorites();
-  const { login } = useAuth(); // ✅ get login method
+  const { login } = useAuth(); 
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -30,10 +30,8 @@ const Login = () => {
         password,
       });
 
-      // ✅ Use AuthContext login() to save token & update auth state
       login(res.data.token, res.data.user); 
 
-      // ✅ Save full user with token in localStorage
       localStorage.setItem('user', JSON.stringify({
         ...res.data.user,
         token: res.data.token,
@@ -43,7 +41,7 @@ const Login = () => {
       localStorage.setItem('userName', res.data.user.name);
       localStorage.setItem('userEmail', res.data.user.email);
 
-      await fetchFavorites(); // fetch favorites after login
+      await fetchFavorites(); 
 
       toast.success(res.data.message || '✅ Login successful!', {
         position: 'top-center',

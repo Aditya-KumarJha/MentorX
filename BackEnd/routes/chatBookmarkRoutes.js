@@ -1,5 +1,3 @@
-// routes/bookmarkRoutes.js
-
 import express from 'express';
 import {
     bookmarkChat,
@@ -7,12 +5,12 @@ import {
     getBookmarks
   } from '../controllers/chatBookmarkController.js';  
 
-import { protect } from '../middleware/authMiddleware.js'; // 🔐 Auth check
+import { protect } from '../middleware/authMiddleware.js'; 
 
 const router = express.Router();
 
-router.post('/', protect, bookmarkChat);       // ✅ Save bookmark
-router.delete('/:id', protect, unbookmarkChat); // ✅ Delete by bookmark ID
-router.get('/', protect, getBookmarks);         // ✅ Fetch all bookmarks
+router.post('/', protect, bookmarkChat);       
+router.delete('/:id', protect, unbookmarkChat); 
+router.get('/', protect, getBookmarks);        
 
 export default router;

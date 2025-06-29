@@ -3,7 +3,6 @@ import Mentor from '../models/MentorModel.js';
 import Post from '../models/Post.js';
 import mongoose from 'mongoose';
 
-// ✅ Toggle favorite mentor
 export const toggleFavoriteMentor = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -36,7 +35,6 @@ export const toggleFavoriteMentor = async (req, res) => {
   }
 };
 
-// ✅ Get favorite mentors
 export const getFavoriteMentors = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('favorites');
@@ -52,7 +50,6 @@ export const getFavoriteMentors = async (req, res) => {
   }
 };
 
-// ✅ Get bookmarked courses
 export const getBookmarkedCourses = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('bookmarkedCourses');
@@ -65,7 +62,6 @@ export const getBookmarkedCourses = async (req, res) => {
   }
 };
 
-// ✅ Toggle liked post (add/remove)
 export const toggleLikedPost = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -98,7 +94,6 @@ export const toggleLikedPost = async (req, res) => {
   }
 };
 
-// ✅ Get all liked posts for user
 export const getLikedPosts = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate({

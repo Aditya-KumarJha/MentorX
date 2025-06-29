@@ -16,7 +16,7 @@ cloudinary.config({
 export const uploadImageFromUrl = async (imageUrl, publicId = null) => {
   try {
     const filename = `mentor-${Date.now()}.jpg`;
-    const tempDir = os.tmpdir(); // cross-platform tmp folder
+    const tempDir = os.tmpdir(); 
     const filePath = path.join(tempDir, filename);
 
     const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });

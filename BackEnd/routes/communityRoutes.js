@@ -5,8 +5,6 @@ import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// ✅ Create new post
-// ✅ Create new post
 router.post('/posts', protect, async (req, res) => {
   try {
     const { title, content, tags } = req.body;
@@ -35,7 +33,6 @@ router.post('/posts', protect, async (req, res) => {
   }
 });
 
-// ✅ Get all posts
 router.get('/posts', async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
@@ -46,7 +43,6 @@ router.get('/posts', async (req, res) => {
   }
 });
 
-// ✅ Like or unlike post + update user's likedPosts
 router.patch('/posts/:id/like', protect, async (req, res) => {
   try {
     const userId = req.user._id.toString();
@@ -79,7 +75,6 @@ router.patch('/posts/:id/like', protect, async (req, res) => {
   }
 });
 
-// ✅ Add comment
 router.post('/posts/:id/comments', protect, async (req, res) => {
   try {
     const { text } = req.body;
@@ -105,7 +100,6 @@ router.post('/posts/:id/comments', protect, async (req, res) => {
   }
 });
 
-// ✅ Delete comment
 router.delete('/posts/:postId/comments/:commentId', protect, async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
@@ -130,8 +124,6 @@ router.delete('/posts/:postId/comments/:commentId', protect, async (req, res) =>
     res.status(500).json({ message: 'Failed to delete comment' });
   }
 });
-
-// ✅ Delete post
 
 router.delete('/posts/:id', protect, async (req, res) => {
   try {

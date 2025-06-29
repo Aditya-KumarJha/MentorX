@@ -1,7 +1,7 @@
 import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
 import { HeartIcon as HeartOutline, TrashIcon } from "@heroicons/react/24/outline";
 import { useAuth } from "../context/AuthContext";
-import axios from "axios";
+import axios from "../utils/axios";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 
@@ -29,13 +29,13 @@ export default function PostCard({ post, darkMode, fetchPosts, index = 0, onDele
   
     try {
       await axios.patch(
-        `http://localhost:5050/api/posts/${post._id}/like`,
+        `/api/posts/${post._id}/like`,
         {},
         { headers: { Authorization: `Bearer ${activeToken}` } }
       );
-      if (!liked && fetchPosts) fetchPosts(); // New like
-      else if (liked && onUnlike) onUnlike(post._id); // Unlike inside dashboard
-      else if (fetchPosts) fetchPosts(); // fallback
+      if (!liked && fetchPosts) fetchPosts(); 
+      else if (liked && onUnlike) onUnlike(post._id); 
+      else if (fetchPosts) fetchPosts(); 
     } catch (err) {
       console.error("Like failed", err.response?.data || err.message);
       toast.error("Failed to like/unlike post");
@@ -48,7 +48,7 @@ export default function PostCard({ post, darkMode, fetchPosts, index = 0, onDele
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5050/api/posts/${post._id}`, {
+      await axios.delete(`/api/posts/${post._id}`, {
         headers: { Authorization: `Bearer ${activeToken}` },
       });
       toast.success("Post deleted");

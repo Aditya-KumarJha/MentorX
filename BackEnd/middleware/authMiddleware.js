@@ -15,13 +15,12 @@ export const protect = async (req, res, next) => {
 
       const user = await User.findById(decoded.id)
         .select('-password')
-        .populate('bookmarkedCourses'); // Keep this
+        .populate('bookmarkedCourses'); 
 
       if (!user) {
         return res.status(401).json({ message: 'Not authorized, user not found' });
       }
 
-      // ✅ Assign full user object so req.user.name is accessible
       req.user = user;
 
       next();

@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const MentorSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
-  profilePic: { type: String },       // Profile image
-  headline: { type: String },         // Quick summary under name
-  occupation: { type: String },       // "ML Engineer at Google"
+  profilePic: { type: String },       
+  headline: { type: String },         
+  occupation: { type: String },       
 
   location: {
     city: String,
@@ -19,11 +19,11 @@ const MentorSchema = new mongoose.Schema({
     instagram: { type: String, default: null },
   },
 
-  expertiseTags: [String],           // e.g. ["Machine Learning"]
-  techStack: [String],               // e.g. ["python", "react", "solidity"]
-  seniorityLevel: { type: String },  // e.g. "Senior", "Founder"
+  expertiseTags: [String],           
+  techStack: [String],              
+  seniorityLevel: { type: String },  
 
-  summary: String, // Full bio / description
+  summary: String, 
 
   education: [{
     school: String,
@@ -58,7 +58,7 @@ const MentorSchema = new mongoose.Schema({
     summary: String,
   }],
 
-  backgroundPic: { type: String, default: null }, // Optional
+  backgroundPic: { type: String, default: null }, 
 
 }, { timestamps: true });
 

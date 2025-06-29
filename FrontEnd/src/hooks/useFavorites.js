@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 import { useAuth } from '../context/AuthContext';
 
 export const useFavoritesLogic = () => {
-  const { user } = useAuth(); // ✅ Auth context
+  const { user } = useAuth();
   const [favoriteIds, setFavoriteIds] = useState([]);
   const [favoriteMentors, setFavoriteMentors] = useState([]);
 
-  // ✅ Fetch favorite mentors from backend
   const fetchFavorites = useCallback(async () => {
 
     if (!user?.token) {
@@ -17,7 +16,7 @@ export const useFavoritesLogic = () => {
     }
 
     try {
-      const res = await axios.get('http://localhost:5050/api/users/favorites', {
+      const res = await axios.get('/api/users/favorites', {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
@@ -30,12 +29,10 @@ export const useFavoritesLogic = () => {
     }
   }, [user?.token]);
 
-  // ✅ Fetch favorites on mount or when token changes
   useEffect(() => {
     fetchFavorites();
   }, [fetchFavorites]);
 
-  // ✅ Toggle favorite mentor
   const toggleFavorite = async (mentorId) => {
     if (!user?.token) {
       console.error('⛔ Attempted to toggle favorite without token');
@@ -44,7 +41,7 @@ export const useFavoritesLogic = () => {
 
     try {
       const res = await axios.post(
-        'http://localhost:5050/api/users/favorites',
+        '/api/users/favorites',
         { mentorId },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );

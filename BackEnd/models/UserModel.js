@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-// Define the schema for an AI conversation bookmark
 const bookmarkSchema = new mongoose.Schema(
   {
     heading: {
@@ -58,7 +57,7 @@ const userSchema = new mongoose.Schema(
         ref: 'Post'
       }
     ],
-    bookmarks: [bookmarkSchema] // ✅ NEW: Bookmarked AI conversations
+    bookmarks: [bookmarkSchema] 
   },
   { timestamps: true }
 );

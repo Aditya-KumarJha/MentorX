@@ -6,19 +6,16 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('✅ Connected to MongoDB'))
   .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
-// Cloudinary config
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// ✅ Hardcoded API Key
 const API_KEY = 'd4d9a0287dmshd4329daf3a9b74dp1f1e27jsn16c266e718ba';
 const API_HOST = 'udemy-api2.p.rapidapi.com';
 
@@ -92,15 +89,15 @@ const fetchAndStoreCourses = async (category = 'data_science') => {
 
     } catch (err) {
       console.error(`❌ Failed to fetch page ${page}:`, err.response?.data || err.message);
-      break; // stop if there's a fatal error
+      break; 
     }
 
-    await new Promise(res => setTimeout(res, 500)); // delay between pages
+    await new Promise(res => setTimeout(res, 500)); 
   }
 
   console.log('✅ Done fetching and storing courses.');
   process.exit();
 };
 
-// 🟩 Start
-fetchAndStoreCourses('data_science'); // change category to fetch different one
+
+fetchAndStoreCourses('data_science'); 

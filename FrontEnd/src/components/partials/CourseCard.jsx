@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaChalkboardTeacher, FaBookmark, FaRegBookmark } from 'react-icons/fa';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 
@@ -23,7 +23,7 @@ const CourseCard = ({ course, index, darkMode, setBookmarkedCourses, isDashboard
 
     try {
       const res = await axios.post(
-        `http://localhost:5050/api/bookmarks/${course._id}`,
+        `/api/bookmarks/${course._id}`,
         {},
         {
           headers: {
