@@ -6,7 +6,7 @@ export const getAIResponse = async (req, res) => {
   const { messages } = req.body;
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return res.status(400).json({ error: "No messages array provided" });
+    return res.status(400).json({ response: "No messages array provided" });
   }
 
   try {
@@ -26,23 +26,29 @@ export const getAIResponse = async (req, res) => {
       }),
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonErr) {
+      console.error("🛑 Failed to parse JSON from OpenRouter:", jsonErr.message);
+      return res.status(500).json({ response: "Invalid JSON response from AI server." });
+    }
 
     if (!response.ok) {
       console.error("❌ OpenRouter Error Response:", data);
-      return res.status(500).json({ error: "OpenRouter failed", details: data });
+      return res.status(500).json({ response: "AI failed to respond", details: data });
     }
 
     const aiMessage = data?.choices?.[0]?.message?.content;
 
     if (!aiMessage) {
       console.error("🛑 No valid AI message received:", data);
-      return res.status(500).json({ error: "Failed to get valid AI response" });
+      return res.status(500).json({ response: "Empty response from AI" });
     }
 
-    res.status(200).json({ response: aiMessage });
+    return res.status(200).json({ response: aiMessage });
   } catch (err) {
     console.error("🔥 OpenRouter API Error:", err.message);
-    res.status(500).json({ error: "Something went wrong while fetching AI response." });
+    return res.status(500).json({ response: "Something went wrong while fetching AI response." });
   }
 };
