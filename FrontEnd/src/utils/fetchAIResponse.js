@@ -8,20 +8,20 @@ export const fetchAIResponse = async (messages) => {
       body: JSON.stringify({ messages }),
     });
 
-    const text = await res.text(); // Raw text to debug bad JSON responses
-    let data = {};
+    const text = await res.text(); 
+    let data;
 
     try {
       data = JSON.parse(text);
     } catch (jsonErr) {
       console.error("❌ AI API JSON Parse Error:", jsonErr);
       console.warn("⚠️ Raw response text received:", text);
-      return "Oops! Something went wrong. Try again later.";
+      return "Oops! Something went wrong. Please try again later.";
     }
 
     if (!res.ok) {
       console.error("❌ AI API Response Error:", res.status, res.statusText, data);
-      return "Sorry, the AI couldn't respond properly.";
+      return data?.response || "Sorry, the AI couldn't respond properly.";
     }
 
     if (!data?.response) {
@@ -33,6 +33,6 @@ export const fetchAIResponse = async (messages) => {
 
   } catch (err) {
     console.error("🔥 AI API Network Error:", err);
-    return "Oops! Something went wrong. Try again later.";
+    return "Oops! Something went wrong. Please check your internet or try again later.";
   }
 };
